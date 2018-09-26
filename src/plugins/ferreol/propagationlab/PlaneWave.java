@@ -1,6 +1,9 @@
 package plugins.ferreol.propagationlab;
 
+import icy.sequence.MetaDataUtil;
 import icy.sequence.Sequence;
+import icy.util.OMEUtil;
+import loci.formats.ome.OMEXMLMetadataImpl;
 import mitiv.array.Double3D;
 import mitiv.base.Shape;
 import plugins.adufour.blocks.lang.Block;
@@ -57,6 +60,9 @@ public class PlaneWave extends EzPlug implements Block {
         anglex.setToolTipText("incidence angle along the first dimension");
         addEzComponent(angley);
         angley.setToolTipText("incidence angle along the first dimension");
+        if (isHeadLess()) {
+            outputWave = new EzVarSequence("generated plane wave");
+        }
 
     }
 
@@ -68,13 +74,27 @@ public class PlaneWave extends EzPlug implements Block {
         Double3D   imgArray =  Double3D.create(outputShape);
         for (int nx = 0; nx < Nx; nx++) {
             for (int ny = 0; ny < Ny; ny++) {
-                double phase = 2.*Math.PI / lambda.getValue()*dxy_nm.getValue()*(nx*Math.sin(anglex.getValue()/180*Math.PI)+ny*Math.sin(angley.getValue()/180*Math.PI));
+                double phase = ni.getValue()*2.*Math.PI / lambda.getValue()*dxy_nm.getValue()*(nx*Math.sin(anglex.getValue()/180*Math.PI)+ny*Math.sin(angley.getValue()/180*Math.PI));
                 imgArray.set(0, nx, ny, Math.cos(phase));
                 imgArray.set(1, nx, ny, Math.sin(phase));
             }
         }
-        IcyImager.show(imgArray,outputSequence,0,"*" ,isHeadLess() );
-        // MessageDialog.showDialog("PlaneWave is working fine !");
+
+        outputSequence  = new Sequence();
+
+        ome.xml.meta.OMEXMLMetadata newMetdat = MetaDataUtil.createMetadata("plane wave");
+        newMetdat.setPixelsPhysicalSizeX(OMEUtil.getLength(dxy_nm.getValue()*1E-3), 0);
+        newMetdat.setPixelsPhysicalSizeY(OMEUtil.getLength(dxy_nm.getValue()*1E-3), 0);
+        newMetdat.setLaserWavelength(OMEUtil.getLength(lambda.getValue()*1E-3), 0, 0);
+        newMetdat.setObjectiveSettingsRefractiveIndex(ni.getValue(), 0 );
+        outputSequence.setMetaData((OMEXMLMetadataImpl) newMetdat); //FIXME may not working now
+
+        IcyImager.show(imgArray,outputSequence,0,"Incident wave" ,isHeadLess() );
+
+        if (isHeadLess()) {
+            outputWave.setValue(outputSequence);
+        }
+
     }
 
     @Override
