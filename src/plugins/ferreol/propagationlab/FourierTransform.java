@@ -6,6 +6,10 @@ import edu.emory.mathcs.jtransforms.fft.DoubleFFT_2D;
 import edu.emory.mathcs.jtransforms.fft.DoubleFFT_3D;
 import icy.sequence.Sequence;
 import mitiv.array.ArrayFactory;
+import mitiv.array.Double1D;
+import mitiv.array.Double2D;
+import mitiv.array.Double3D;
+import mitiv.array.Double4D;
 import mitiv.array.DoubleArray;
 import mitiv.array.ShapedArray;
 import mitiv.base.Shape;
@@ -29,7 +33,7 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
     protected EzVarBoolean    direction;
 
     protected EzVarText       outputOption;  // Combobox for variance estimation
-    protected final String[] outpoutOptions = new String[]{"Cartesian","Polar","Real part","Imaginary part","modulus","phase","Squared modulus"};
+    protected final static String[] outputOptions = new String[]{"Cartesian","Polar","Real part","Imaginary part","modulus","phase","Squared modulus"};
     private boolean iscomplex;
     private Shape outputShape;
 
@@ -46,7 +50,7 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
         input.setToolTipText("input with real and imaginary part in channel 0 and 1 respectively");
         direction = new EzVarBoolean("Backward", false);
         direction.setToolTipText("Direction of the transform (backward if checked");
-        outputOption = new EzVarText(      "Output:", outpoutOptions, false);
+        outputOption = new EzVarText(      "Output:", outputOptions, false);
         addEzComponent(input);
         addEzComponent(direction);
         addEzComponent(outputOption);
@@ -148,12 +152,88 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
             }
             outputShape = new Shape(newdims);
         }
-
-
         outputArray = ArrayFactory.wrap(data, outputShape);
 
+        if(outputOption.getValue()==outputOptions[0] ){ // Cartesian
+            IcyImager.show(outputArray,outputSequence,0,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
+        }else if(outputOption.getValue()==outputOptions[2] ){//Real part
+            switch (outputArray.getRank()){
+                case 2:
+                    IcyImager.show( ((Double2D) outputArray).slice(0,0),outputSequence,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
+                    break;
+                case 3:
+                    IcyImager.show( ((Double3D) outputArray).slice(0,0),outputSequence,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
+                    break;
+                case 4:
+                    IcyImager.show( ((Double4D) outputArray).slice(0,0),outputSequence,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
+                    break;
+            }
+        }else if(outputOption.getValue()==outputOptions[3] ){// imaginary part
+            switch (outputArray.getRank()){
+                case 2:
+                    IcyImager.show( ((Double2D) outputArray).slice(1,0),outputSequence,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
+                    break;
+                case 3:
+                    IcyImager.show( ((Double3D) outputArray).slice(1,0),outputSequence,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
+                    break;
+                case 4:
+                    IcyImager.show( ((Double4D) outputArray).slice(1,0),outputSequence,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
+                    break;
+            }
+        }else{
+            double scl = 1./outputArray.getNumber();
+            if(outputOption.getValue()==outputOptions[1] ){ //Polar
 
-        IcyImager.show(outputArray,outputSequence,0,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
+                for(int i=0;i<outputArray.getNumber();i=i+2){
+                    double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
+                    double im = ((Double1D)outputArray.toDouble().as1D()).get(i+1);
+                    ((Double1D)outputArray.toDouble().as1D()).set(i,Math.sqrt(re*re+im*im));
+                    ((Double1D)outputArray.toDouble().as1D()).set(i+1,Math.atan2(im,re));
+                }
+                IcyImager.show(outputArray,outputSequence,0,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
+
+            }else{
+                if(outputOption.getValue()==outputOptions[4] ){//modulus
+
+                    for(int i=0;i<outputArray.getNumber();i=i+2){
+                        double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
+                        double im = ((Double1D)outputArray.toDouble().as1D()).get(i+1);
+                        ((Double1D)outputArray.toDouble().as1D()).set(i,Math.sqrt(re*re+im*im));
+                    }
+
+                }else if(outputOption.getValue()==outputOptions[5] ){//phase
+
+                    for(int i=0;i<outputArray.getNumber();i=i+2){
+                        double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
+                        double im = ((Double1D)outputArray.toDouble().as1D()).get(i+1);
+                        ((Double1D)outputArray.toDouble().as1D()).set(i,Math.atan2(im,re));
+                    }
+
+                }else if(outputOption.getValue()==outputOptions[6] ){//squared modulus
+
+                    for(int i=0;i<outputArray.getNumber();i=i+2){
+                        double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
+                        double im = ((Double1D)outputArray.toDouble().as1D()).get(i+1);
+                        ((Double1D)outputArray.toDouble().as1D()).set(i,(re*re+im*im));
+                    }
+                }
+                switch (outputArray.getRank()){
+                    case 2:
+                        IcyImager.show( ((Double2D) outputArray).slice(0,0),outputSequence,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
+                        break;
+                    case 3:
+                        IcyImager.show( ((Double3D) outputArray).slice(0,0),outputSequence,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
+                        break;
+                    case 4:
+                        IcyImager.show( ((Double4D) outputArray).slice(0,0),outputSequence,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
+                        break;
+
+                }
+            }
+        }
+
+
+
 
         if (isHeadLess()) {
             output.setValue(outputSequence);
