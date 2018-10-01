@@ -90,6 +90,8 @@ public class PlaneWave extends EzPlug implements Block {
         outputSequence.setMetaData((OMEXMLMetadataImpl) newMetdat); //FIXME may not working now
 
         IcyImager.show(imgArray,outputSequence,0,"Incident wave" ,isHeadLess() );
+        outputSequence.setChannelName(0, "Real part");
+        outputSequence.setChannelName(1, "Imaginary part");
 
         if (isHeadLess()) {
             outputWave.setValue(outputSequence);

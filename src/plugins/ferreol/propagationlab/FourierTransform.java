@@ -4,8 +4,10 @@ package plugins.ferreol.propagationlab;
 import edu.emory.mathcs.jtransforms.fft.DoubleFFT_1D;
 import edu.emory.mathcs.jtransforms.fft.DoubleFFT_2D;
 import edu.emory.mathcs.jtransforms.fft.DoubleFFT_3D;
+import icy.plugin.interface_.PluginBundled;
 import icy.sequence.Sequence;
 import mitiv.array.ArrayFactory;
+import mitiv.array.ArrayUtils;
 import mitiv.array.Double1D;
 import mitiv.array.Double2D;
 import mitiv.array.Double3D;
@@ -23,7 +25,7 @@ import plugins.adufour.ezplug.EzVarText;
 import plugins.mitiv.io.Icy2TiPi;
 import plugins.mitiv.io.IcyImager;
 
-public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
+public class FourierTransform  extends EzPlug  implements Block, EzStoppable, PluginBundled{
     protected EzVarSequence input;
     protected Sequence inputSequence;
     protected ShapedArray inputArray;
@@ -31,6 +33,8 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
     protected EzVarSequence output;
     protected Sequence outputSequence;
     protected EzVarBoolean    direction;
+    protected EzVarBoolean    fftshift;
+
 
     protected EzVarText       outputOption;  // Combobox for variance estimation
     protected final static String[] outputOptions = new String[]{"Cartesian","Polar","Real part","Imaginary part","modulus","phase","Squared modulus"};
@@ -50,9 +54,12 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
         input.setToolTipText("input with real and imaginary part in channel 0 and 1 respectively");
         direction = new EzVarBoolean("Backward", false);
         direction.setToolTipText("Direction of the transform (backward if checked");
+        fftshift = new EzVarBoolean("FFT shift", false);
+        fftshift.setToolTipText("Swap quadrant to center the 0 frequency");
         outputOption = new EzVarText(      "Output:", outputOptions, false);
         addEzComponent(input);
         addEzComponent(direction);
+        addEzComponent(fftshift);
         addEzComponent(outputOption);
         if (isHeadLess()) {
             output = new EzVarSequence("Output Image");
@@ -62,7 +69,8 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
     protected void execute() {
         Sequence inputSequence = input.getValue();
         inputArray = Icy2TiPi.sequenceToArray(inputSequence);
-
+        Sequence outputSequence= new Sequence();
+        outputSequence.copyMetaDataFrom(inputSequence, false);
         double[] data;
 
         if(((inputArray.getRank()<3)&&(inputArray.getDimension(inputArray.getRank()-1)==2)) ||((inputArray.getRank()>2) &&(inputArray.getDimension(2)==2))){ //Assuming complex input
@@ -154,8 +162,23 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
         }
         outputArray = ArrayFactory.wrap(data, outputShape);
 
+        if (fftshift.getValue()){
+            int rank = outputArray.getRank();
+            int[] off = new int[rank];
+            for (int k = 1; k < rank; ++k) {
+                int dim = outputArray.getDimension(k);
+                off[k] = -(dim/2);
+            }
+
+            outputArray = (DoubleArray) ArrayUtils.roll(outputArray,off).copy();
+
+        }
+
         if(outputOption.getValue()==outputOptions[0] ){ // Cartesian
             IcyImager.show(outputArray,outputSequence,0,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
+            outputSequence.setChannelName(0, "Real part");
+            outputSequence.setChannelName(1, "Imaginary part");
+
         }else if(outputOption.getValue()==outputOptions[2] ){//Real part
             switch (outputArray.getRank()){
                 case 2:
@@ -168,6 +191,7 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
                     IcyImager.show( ((Double4D) outputArray).slice(0,0),outputSequence,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
                     break;
             }
+            outputSequence.setChannelName(0, "Real part");
         }else if(outputOption.getValue()==outputOptions[3] ){// imaginary part
             switch (outputArray.getRank()){
                 case 2:
@@ -180,8 +204,8 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
                     IcyImager.show( ((Double4D) outputArray).slice(1,0),outputSequence,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
                     break;
             }
+            outputSequence.setChannelName(0, "Imaginary part");
         }else{
-            double scl = 1./outputArray.getNumber();
             if(outputOption.getValue()==outputOptions[1] ){ //Polar
 
                 for(int i=0;i<outputArray.getNumber();i=i+2){
@@ -229,10 +253,23 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
                         break;
 
                 }
+                //  outputSequence.getFirstViewer().getLut().getLutChannel(0).setColorMap(new IceColorMap(),false);
+            }
+            if(outputOption.getValue()==outputOptions[5] ){//phase
+                outputSequence.setChannelName(0, "Phase");
+
+            }else if(outputOption.getValue()==outputOptions[6] ){//squared modulus
+                outputSequence.setChannelName(0, "Squared modulus");
+            }else{
+                outputSequence.setChannelName(0, "Modulus");
+                if(outputOption.getValue()==outputOptions[1]){
+                    outputSequence.setChannelName(1, "Phase");
+                }
             }
         }
 
 
+        // outputSequence.getFirstViewer().getLut().getLutChannel(0).setColorMap(new IceColorMap(),false);
 
 
         if (isHeadLess()) {
@@ -249,7 +286,12 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
      */
     @Override
     public void declareInput(VarList inputMap) {
-        // TODO Auto-generated method stub
+
+        initialize();
+        inputMap.add("input", input.getVariable());
+        inputMap.add("direction", direction.getVariable());
+        inputMap.add("fftshift", fftshift.getVariable());
+        inputMap.add("outputOption", outputOption.getVariable());
 
     }
     /* (non-Javadoc)
@@ -257,8 +299,15 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
      */
     @Override
     public void declareOutput(VarList outputMap) {
+        outputMap.add("output", output.getVariable());
+    }
+    /* (non-Javadoc)
+     * @see icy.plugin.interface_.PluginBundled#getMainPluginClassName()
+     */
+    @Override
+    public String getMainPluginClassName() {
         // TODO Auto-generated method stub
-
+        return null;
     }
 
 }
