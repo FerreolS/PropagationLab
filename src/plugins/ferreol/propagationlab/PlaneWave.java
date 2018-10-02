@@ -113,8 +113,8 @@ public class PlaneWave extends EzPlug implements Block {
         initialize();
         inputMap.add("dxy", dxy_nm.getVariable());
         inputMap.add("npix", npix.getVariable());
-        inputMap.add("ni", ni.getVariable());
         inputMap.add("lambda", lambda.getVariable());
+        inputMap.add("ni", ni.getVariable());
         inputMap.add("angle X", anglex.getVariable());
         inputMap.add("angle Y", angley.getVariable());
 
