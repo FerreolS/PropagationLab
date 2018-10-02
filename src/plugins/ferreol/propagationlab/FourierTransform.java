@@ -70,6 +70,7 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
         inputArray = Icy2TiPi.sequenceToArray(inputSequence);
         Sequence outputSequence= new Sequence();
         outputSequence.copyMetaDataFrom(inputSequence, false);
+
         double[] data;
 
         if(((inputArray.getRank()<3)&&(inputArray.getDimension(inputArray.getRank()-1)==2)) ||((inputArray.getRank()>2) &&(inputArray.getDimension(2)==2))){ //Assuming complex input
@@ -170,7 +171,6 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
             }
 
             outputArray = (DoubleArray) ArrayUtils.roll(outputArray,off).copy();
-
         }
 
         if(outputOption.getValue()==outputOptions[0] ){ // Cartesian
@@ -267,9 +267,15 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
             }
         }
 
-
+        switch (outputArray.getRank()){
+            case 4:
+                outputSequence.setPixelSizeZ(1./(inputSequence.getPixelSizeZ()*outputArray.getDimension(3)));
+            case 3:
+                outputSequence.setPixelSizeY(1./(inputSequence.getPixelSizeY()*outputArray.getDimension(2)));
+            case 2:
+                outputSequence.setPixelSizeX(1./(inputSequence.getPixelSizeX()*outputArray.getDimension(1)));
+        }
         // outputSequence.getFirstViewer().getLut().getLutChannel(0).setColorMap(new IceColorMap(),false);
-
 
         if (isHeadLess()) {
             output.setValue(outputSequence);
