@@ -1,7 +1,7 @@
 /**
  *
  */
-package plugins.ferreol.propagationlab;
+package plugins.ferreol.PropagationLab;
 
 import javax.swing.JSeparator;
 

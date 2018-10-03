@@ -1,4 +1,4 @@
-package plugins.ferreol.propagationlab;
+package plugins.ferreol.PropagationLab;
 
 import icy.plugin.interface_.PluginBundled;
 import icy.sequence.MetaDataUtil;

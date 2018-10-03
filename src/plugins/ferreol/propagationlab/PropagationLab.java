@@ -15,7 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *  */
 
-package plugins.ferreol.propagationlab;
+package plugins.ferreol.PropagationLab;
 
 import icy.plugin.abstract_.Plugin;
 import icy.plugin.interface_.PluginLibrary;

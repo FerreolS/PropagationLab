@@ -1,5 +1,5 @@
 
-package plugins.ferreol.propagationlab;
+package plugins.ferreol.PropagationLab;
 
 import edu.emory.mathcs.jtransforms.fft.DoubleFFT_1D;
 import edu.emory.mathcs.jtransforms.fft.DoubleFFT_2D;

@@ -1,7 +1,7 @@
 /**
  *
  */
-package plugins.ferreol.propagationlab;
+package plugins.ferreol.PropagationLab;
 
 import icy.plugin.interface_.PluginBundled;
 import icy.sequence.Sequence;
@@ -10,7 +10,6 @@ import mitiv.array.Double2D;
 import mitiv.array.Double3D;
 import mitiv.array.Double4D;
 import mitiv.array.ShapedArray;
-import mitiv.base.Shape;
 import plugins.adufour.blocks.lang.Block;
 import plugins.adufour.blocks.util.VarList;
 import plugins.adufour.ezplug.EzPlug;
@@ -38,7 +37,6 @@ public class ComplexConvert extends EzPlug implements Block, EzStoppable,PluginB
 
     protected EzVarText       outputOption;  // Combobox
     protected final static String[] outputOptions = new String[]{"Cartesian","Polar","Real part","Imaginary part","modulus","phase","Squared modulus"};
-    private Shape outputShape;
 
     @Override
     protected void initialize()

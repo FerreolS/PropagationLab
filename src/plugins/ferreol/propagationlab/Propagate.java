@@ -1,7 +1,7 @@
 /**
  *
  */
-package plugins.ferreol.propagationlab;
+package plugins.ferreol.PropagationLab;
 
 import edu.emory.mathcs.jtransforms.fft.DoubleFFT_2D;
 import icy.plugin.interface_.PluginBundled;
