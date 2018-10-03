@@ -70,8 +70,13 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable 
     @Override
     protected void execute() {
         inputSequence1 = input1.getValue();
-        ShapedArray inputArray1 =  Icy2TiPi.sequenceToArray(inputSequence1);
         inputSequence2 = input2.getValue();
+
+
+        if ((inputSequence1==null)||(inputSequence2==null)){
+            return;
+        }
+        ShapedArray inputArray1 =  Icy2TiPi.sequenceToArray(inputSequence1);
         ShapedArray inputArray2 = Icy2TiPi.sequenceToArray(inputSequence2);
         Sequence outputSequence= new Sequence();
         outputSequence.copyMetaDataFrom(inputSequence1, false);
@@ -81,7 +86,7 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable 
         int rank = inputArray1.getRank();
 
         if((rank<4)&&(inputArray1.getDimension(inputArray1.getRank()-1)==2)){ //Assuming complex input
-            inputArray1 = inputArray1.movedims(2, 0).toDouble();
+            inputArray1 = inputArray1.movedims( Math.min(inputArray1.getRank()-1,2), 0).toDouble();
             outputShape = inputArray1.getShape();
         }else{
             throw new IllegalArgumentException("First input must be complex cartesian with less than 4D");
@@ -238,6 +243,10 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable 
                     outputSequence.setChannelName(1, "Phase");
                 }
             }
+        }
+
+        if (isHeadLess()) {
+            output.setValue(outputSequence);
         }
     }
     /* (non-Javadoc)

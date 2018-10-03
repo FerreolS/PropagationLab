@@ -66,6 +66,11 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
     @Override
     protected void execute() {
         Sequence inputSequence = input.getValue();
+
+        if (inputSequence==null){
+            return;
+        }
+
         inputArray = Icy2TiPi.sequenceToArray(inputSequence);
         Sequence outputSequence= new Sequence();
         outputSequence.copyMetaDataFrom(inputSequence, false);
