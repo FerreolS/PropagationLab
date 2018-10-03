@@ -37,7 +37,6 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
 
     protected EzVarText       outputOption;  // Combobox
     protected final static String[] outputOptions = new String[]{"Cartesian","Polar","Real part","Imaginary part","modulus","phase","Squared modulus"};
-    private boolean iscomplex;
     private Shape outputShape;
 
 
@@ -74,7 +73,6 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
         double[] data;
 
         if(((inputArray.getRank()<3)&&(inputArray.getDimension(inputArray.getRank()-1)==2)) ||((inputArray.getRank()>2) &&(inputArray.getDimension(2)==2))){ //Assuming complex input
-            iscomplex = true;
             inputArray = inputArray.movedims(2, 0);
             data  = inputArray.toDouble().flatten();
             switch (inputArray.getRank()) {
@@ -115,7 +113,6 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
             }
             outputShape=inputArray.getShape();
         }else{ // Assuming a real input
-            iscomplex = false;
             int [] newdims = new  int[inputArray.getRank()+1];
             newdims[0] = 2;
             for (int i = 1; i < newdims.length; i++) {
