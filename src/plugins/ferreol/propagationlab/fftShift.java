@@ -3,6 +3,7 @@
  */
 package plugins.ferreol.propagationlab;
 
+import icy.plugin.interface_.PluginBundled;
 import icy.sequence.Sequence;
 import mitiv.array.ArrayUtils;
 import mitiv.array.ShapedArray;
@@ -18,7 +19,7 @@ import plugins.mitiv.io.IcyImager;
  * @author ferreol
  *
  */
-public class fftShift extends EzPlug implements Block, EzStoppable {
+public class fftShift extends EzPlug implements Block, EzStoppable, PluginBundled{
     protected EzVarSequence input;
     protected Sequence inputSequence;
     protected ShapedArray inputArray;
@@ -90,5 +91,10 @@ public class fftShift extends EzPlug implements Block, EzStoppable {
     public void clean() {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public String getMainPluginClassName() {
+        return "PropagationLab";
     }
 }

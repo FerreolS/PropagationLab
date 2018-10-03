@@ -5,6 +5,7 @@ package plugins.ferreol.propagationlab;
 
 import javax.swing.JSeparator;
 
+import icy.plugin.interface_.PluginBundled;
 import icy.sequence.MetaDataUtil;
 import icy.sequence.Sequence;
 import icy.util.OMEUtil;
@@ -31,7 +32,7 @@ import plugins.mitiv.io.IcyImager;
  * @author ferreol
  *
  */
-public class PupilFunction extends EzPlug implements Block, EzStoppable {
+public class PupilFunction extends EzPlug implements Block, EzStoppable, PluginBundled  {
     protected EzVarInteger     npix;     // size of the output (npix x npix)
 
     // optical parameters
@@ -241,5 +242,9 @@ public class PupilFunction extends EzPlug implements Block, EzStoppable {
 
     }
 
+    @Override
+    public String getMainPluginClassName() {
+        return "PropagationLab";
+    }
 
 }

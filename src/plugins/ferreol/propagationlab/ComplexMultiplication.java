@@ -3,6 +3,7 @@
  */
 package plugins.ferreol.propagationlab;
 
+import icy.plugin.interface_.PluginBundled;
 import icy.sequence.Sequence;
 import mitiv.array.ArrayFactory;
 import mitiv.array.Double1D;
@@ -25,7 +26,7 @@ import plugins.mitiv.io.IcyImager;
  * @author ferreol
  *
  */
-public class ComplexMultiplication extends EzPlug implements Block, EzStoppable {
+public class ComplexMultiplication extends EzPlug implements Block, EzStoppable, PluginBundled {
 
     protected EzVarSequence input1;
     protected EzVarText       inputOption1;
@@ -275,5 +276,10 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable 
     public void clean() {
         // TODO Auto-generated method stub
 
+    }
+
+    @Override
+    public String getMainPluginClassName() {
+        return "PropagationLab";
     }
 }

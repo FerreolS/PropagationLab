@@ -4,6 +4,7 @@ package plugins.ferreol.propagationlab;
 import edu.emory.mathcs.jtransforms.fft.DoubleFFT_1D;
 import edu.emory.mathcs.jtransforms.fft.DoubleFFT_2D;
 import edu.emory.mathcs.jtransforms.fft.DoubleFFT_3D;
+import icy.plugin.interface_.PluginBundled;
 import icy.sequence.Sequence;
 import mitiv.array.ArrayFactory;
 import mitiv.array.ArrayUtils;
@@ -24,7 +25,7 @@ import plugins.adufour.ezplug.EzVarText;
 import plugins.mitiv.io.Icy2TiPi;
 import plugins.mitiv.io.IcyImager;
 
-public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
+public class FourierTransform  extends EzPlug  implements Block, EzStoppable, PluginBundled{
     protected EzVarSequence input;
     protected Sequence inputSequence;
     protected ShapedArray inputArray;
@@ -309,4 +310,8 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
         outputMap.add("output", output.getVariable());
     }
 
+    @Override
+    public String getMainPluginClassName() {
+        return "PropagationLab";
+    }
 }

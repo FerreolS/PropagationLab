@@ -1,5 +1,6 @@
 package plugins.ferreol.propagationlab;
 
+import icy.plugin.interface_.PluginBundled;
 import icy.sequence.MetaDataUtil;
 import icy.sequence.Sequence;
 import icy.util.OMEUtil;
@@ -15,7 +16,7 @@ import plugins.adufour.ezplug.EzVarSequence;
 import plugins.ferreol.demics.ToolTipText;
 import plugins.mitiv.io.IcyImager;
 
-public class PlaneWave extends EzPlug implements Block {
+public class PlaneWave extends EzPlug implements Block, PluginBundled {
 
     protected EzVarInteger     npix;     // size of the output (npix x npix)
 
@@ -129,5 +130,11 @@ public class PlaneWave extends EzPlug implements Block {
     public void declareOutput(VarList outputMap) {
         // TODO Auto-generated method stub
         outputMap.add("outputWave", outputWave.getVariable());
+    }
+
+
+    @Override
+    public String getMainPluginClassName() {
+        return "PropagationLab";
     }
 }

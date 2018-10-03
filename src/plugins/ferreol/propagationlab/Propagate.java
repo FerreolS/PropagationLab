@@ -4,6 +4,7 @@
 package plugins.ferreol.propagationlab;
 
 import edu.emory.mathcs.jtransforms.fft.DoubleFFT_2D;
+import icy.plugin.interface_.PluginBundled;
 import icy.sequence.Sequence;
 import mitiv.array.Double3D;
 import mitiv.array.ShapedArray;
@@ -24,7 +25,7 @@ import plugins.mitiv.io.IcyImager;
  * @author ferreol
  *
  */
-public class Propagate extends EzPlug implements Block, EzStoppable {
+public class Propagate extends EzPlug implements Block, EzStoppable, PluginBundled {
 
 
     // optical parameters
@@ -238,6 +239,10 @@ public class Propagate extends EzPlug implements Block, EzStoppable {
 
     }
 
+    @Override
+    public String getMainPluginClassName() {
+        return "PropagationLab";
+    }
 
 
 }
