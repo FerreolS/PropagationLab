@@ -35,7 +35,7 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable{
     protected EzVarBoolean    fftshift;
 
 
-    protected EzVarText       outputOption;  // Combobox for variance estimation
+    protected EzVarText       outputOption;  // Combobox
     protected final static String[] outputOptions = new String[]{"Cartesian","Polar","Real part","Imaginary part","modulus","phase","Squared modulus"};
     private boolean iscomplex;
     private Shape outputShape;

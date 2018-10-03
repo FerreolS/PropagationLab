@@ -14,7 +14,6 @@ import mitiv.array.ArrayFactory;
 import mitiv.array.ArrayUtils;
 import mitiv.array.Double3D;
 import mitiv.base.Shape;
-import mitiv.utils.MathUtils;
 import plugins.adufour.blocks.lang.Block;
 import plugins.adufour.blocks.util.VarList;
 import plugins.adufour.ezplug.EzLabel;
@@ -24,6 +23,7 @@ import plugins.adufour.ezplug.EzVarBoolean;
 import plugins.adufour.ezplug.EzVarDouble;
 import plugins.adufour.ezplug.EzVarInteger;
 import plugins.adufour.ezplug.EzVarSequence;
+import plugins.adufour.ezplug.EzVarText;
 import plugins.ferreol.demics.ToolTipText;
 import plugins.mitiv.io.IcyImager;
 
@@ -50,6 +50,8 @@ public class PupilFunction extends EzPlug implements Block, EzStoppable {
 
     protected EzVarBoolean    fftshift;
 
+    protected EzVarText       outputOption;  // Combobox
+    protected final static String[] outputOptions = new String[]{"Cartesian","Polar"};
 
 
     protected Shape pupilShape;
@@ -63,19 +65,24 @@ public class PupilFunction extends EzPlug implements Block, EzStoppable {
     protected Sequence pupilSequence;
     @Override
     protected void initialize() {
+        if (!isHeadLess()) {
+            getUI().setParametersIOVisible(false);
+            //    getUI().setActionPanelVisible(false);
+        }
         npix = new EzVarInteger("num pixel", 128,1, Integer.MAX_VALUE ,1);
         dxy_nm = new EzVarDouble("dxy(nm):",64.5,0., Double.MAX_VALUE,1.);
         lambda = new EzVarDouble( "\u03BB(nm):",540.,10.,15000.,5);
         ni = new EzVarDouble("ni:",1.,1.,2.,0.1);
         na= new EzVarDouble("na:",1.,0.,2.,0.1);
         fftshift = new EzVarBoolean("FFT shift", false);
+        outputOption = new EzVarText(      "Output type:", outputOptions, false);
 
-        defocus = new EzVarDouble("defocus",0,-2, 2,.1);
-        astigmatism0 = new EzVarDouble("astigmatism 0°",0,-2, 2,.1);
-        astigmatism45 = new EzVarDouble("astigmatism 45°",0,-2, 2,.1);
-        comaX = new EzVarDouble("vertical coma",0,-2, 2,.1);
-        comaY = new EzVarDouble("horizontal coma",0,-2, 2,.1);
-        spherical = new EzVarDouble("spherical",0,-2, 2,.1);
+        defocus = new EzVarDouble("defocus",0,-Double.MAX_VALUE, Double.MAX_VALUE,.1);
+        astigmatism0 = new EzVarDouble("astigmatism 0°",0,-Double.MAX_VALUE, Double.MAX_VALUE,.1);
+        astigmatism45 = new EzVarDouble("astigmatism 45°",0,-Double.MAX_VALUE, Double.MAX_VALUE,.1);
+        comaX = new EzVarDouble("vertical coma",0,-Double.MAX_VALUE, Double.MAX_VALUE,.1);
+        comaY = new EzVarDouble("horizontal coma",0,-Double.MAX_VALUE, Double.MAX_VALUE,.1);
+        spherical = new EzVarDouble("spherical",0,-Double.MAX_VALUE, Double.MAX_VALUE,.1);
 
 
         addEzComponent(npix);
@@ -90,10 +97,11 @@ public class PupilFunction extends EzPlug implements Block, EzStoppable {
         na.setToolTipText(ToolTipText.doubleNa);
         addEzComponent(fftshift);
         fftshift.setToolTipText("Swap quadrant to center the 0 frequency");
+        addEzComponent(outputOption);
 
 
         addComponent(new JSeparator(JSeparator.VERTICAL));
-        addEzComponent(new EzLabel("Aberration"));
+        addEzComponent(new EzLabel("Aberrations"));
         addEzComponent(defocus);
         addEzComponent(astigmatism0);
         addEzComponent(astigmatism45);
@@ -129,7 +137,6 @@ public class PupilFunction extends EzPlug implements Block, EzStoppable {
 
 
         zernike = Zernike.zernikeArray(11, Nx, Ny, radius, true,false);
-        zernike = MathUtils.gram_schmidt_orthonormalization(zernike, Nx, Ny, 11);
         Double3D zernikeArray = ArrayFactory.wrap(zernike, Nx, Ny, 11);
 
 
@@ -157,18 +164,36 @@ public class PupilFunction extends EzPlug implements Block, EzStoppable {
 
         pupilSequence  = new Sequence();
 
-        ome.xml.meta.OMEXMLMetadata newMetdat = MetaDataUtil.createMetadata("plane wave");
-        newMetdat.setPixelsPhysicalSizeX(OMEUtil.getLength(dxy_nm.getValue()*1E-3), 0);
-        newMetdat.setPixelsPhysicalSizeY(OMEUtil.getLength(dxy_nm.getValue()*1E-3), 0);
+        ome.xml.meta.OMEXMLMetadata newMetdat = MetaDataUtil.createMetadata("pupil function");
         newMetdat.setLaserWavelength(OMEUtil.getLength(lambda.getValue()*1E-3), 0, 0);
         newMetdat.setObjectiveSettingsRefractiveIndex(ni.getValue(), 0 );
+        newMetdat.setObjectiveLensNA(na.getValue(), 0, 0);
         pupilSequence.setMetaData((OMEXMLMetadataImpl) newMetdat); //FIXME may not working now
 
-        //   IcyImager.show(ArrayFactory.wrap(zernike, Nx, Ny, 11),pupilSequence,"zernike" ,isHeadLess() );
+        pupilSequence.setPixelSizeX(1./(dxy_nm.getValue()*1E-3*Nx));
+        pupilSequence.setPixelSizeY(1./(dxy_nm.getValue()*1E-3*Ny));
 
-        IcyImager.show(pupilArray,pupilSequence,0,"Pupil" ,isHeadLess() );
-        //    pupilSequence.setChannelName(0, "Real part");
-        //    pupilSequence.setChannelName(1, "Imaginary part");
+        if(outputOption.getValue()==outputOptions[0] ){ // Cartesian
+            double [] data = pupilArray.flatten();
+
+            for (int nx = 0; nx < pupilArray.getNumber()/2; nx++){
+
+                double mod= data[2*nx];
+                double phase = data[2*nx+1];
+                data[2*nx] = mod * Math.cos(phase);
+                data[2*nx+1] = mod * Math.sin(phase);
+
+            }
+            pupilArray = (Double3D) ArrayFactory.wrap(data, pupilShape);
+
+            IcyImager.show(pupilArray,pupilSequence,0,"Pupil function" ,isHeadLess() );
+            pupilSequence.setChannelName(0, "Real part");
+            pupilSequence.setChannelName(1, "Imaginary part");
+        }else{//Polar
+            IcyImager.show(pupilArray,pupilSequence,0,"Pupil function" ,isHeadLess() );
+            pupilSequence.setChannelName(0, "modulus");
+            pupilSequence.setChannelName(1, "phase");
+        }
 
         if (isHeadLess()) {
             pupilout.setValue(pupilSequence);
@@ -181,8 +206,20 @@ public class PupilFunction extends EzPlug implements Block, EzStoppable {
      */
     @Override
     public void declareInput(VarList inputMap) {
-        // TODO Auto-generated method stub
-
+        initialize();
+        inputMap.add("npix", npix.getVariable());
+        inputMap.add("pixel size", dxy_nm.getVariable());
+        inputMap.add("wavelength", lambda.getVariable());
+        inputMap.add("refractive index", ni.getVariable());
+        inputMap.add("na", na.getVariable());
+        inputMap.add("defocus",defocus.getVariable());
+        inputMap.add("astigmatism 0°",astigmatism0.getVariable());
+        inputMap.add("astigmatism 45°",astigmatism45.getVariable());
+        inputMap.add("coma X", comaX.getVariable());
+        inputMap.add("coma Y", comaY.getVariable());
+        inputMap.add("spharical",spherical.getVariable());
+        inputMap.add("fftshift", fftshift.getVariable());
+        inputMap.add("outputOption", outputOption.getVariable());
     }
 
     /* (non-Javadoc)
@@ -190,7 +227,8 @@ public class PupilFunction extends EzPlug implements Block, EzStoppable {
      */
     @Override
     public void declareOutput(VarList outputMap) {
-        // TODO Auto-generated method stub
+        outputMap.add("pupil", pupilout.getVariable());
+
 
     }
 
