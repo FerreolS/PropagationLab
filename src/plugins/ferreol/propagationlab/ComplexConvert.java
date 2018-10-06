@@ -36,7 +36,7 @@ public class ComplexConvert extends EzPlug implements Block, EzStoppable,PluginB
 
 
     protected EzVarText       outputOption;  // Combobox
-    protected final static String[] outputOptions = new String[]{"Cartesian","Polar","Real part","Imaginary part","modulus","phase","Squared modulus"};
+    protected final static String[] outputOptions = new String[]{"Cartesian","Polar","Real part","Imaginary part","modulus","phase","Log(modulus)"};
 
     @Override
     protected void initialize()
@@ -46,7 +46,7 @@ public class ComplexConvert extends EzPlug implements Block, EzStoppable,PluginB
             //    getUI().setActionPanelVisible(false);
         }
         input = new EzVarSequence("input");
-        outputOption = new EzVarText(      "Output type:", inputOptions, false);
+        outputOption = new EzVarText(      "Output type:", outputOptions, false);
         inputOption = new EzVarText(      "input  type:", inputOptions, false);
 
         addEzComponent(input);
@@ -65,7 +65,7 @@ public class ComplexConvert extends EzPlug implements Block, EzStoppable,PluginB
         }
         outputArray = Icy2TiPi.sequenceToArray(inputSequence);
         Sequence outputSequence= new Sequence();
-        outputSequence.copyFrom(inputSequence, false);
+        outputSequence.copyMetaDataFrom(inputSequence, false);
 
 
         if(inputOption.getValue()==outputOption.getValue() ){
@@ -139,12 +139,12 @@ public class ComplexConvert extends EzPlug implements Block, EzStoppable,PluginB
                             ((Double1D)outputArray.toDouble().as1D()).set(i,Math.atan2(im,re));
                         }
 
-                    }else if(outputOption.getValue()==outputOptions[6] ){//squared modulus
+                    }else if(outputOption.getValue()==outputOptions[6] ){//log modulus
 
                         for(int i=0;i<outputArray.getNumber();i=i+2){
                             double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
                             double im = ((Double1D)outputArray.toDouble().as1D()).get(i+1);
-                            ((Double1D)outputArray.toDouble().as1D()).set(i,(re*re+im*im));
+                            ((Double1D)outputArray.toDouble().as1D()).set(i, Math.log10(re*re+im*im+1E-15));
                         }
                     }
                     switch (outputArray.getRank()){
@@ -163,7 +163,7 @@ public class ComplexConvert extends EzPlug implements Block, EzStoppable,PluginB
                     outputSequence.setChannelName(0, "Phase");
 
                 }else if(outputOption.getValue()==outputOptions[6] ){//squared modulus
-                    outputSequence.setChannelName(0, "Squared modulus");
+                    outputSequence.setChannelName(0, "Log(modulus)");
                 }else{
                     outputSequence.setChannelName(0, "Modulus");
                     if(outputOption.getValue()==outputOptions[1]){

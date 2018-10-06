@@ -111,7 +111,7 @@ public class PupilFunction extends EzPlug implements Block, EzStoppable, PluginB
         addEzComponent(spherical);
 
         if (isHeadLess()) {
-            pupilout = new EzVarSequence("generated plane wave");
+            pupilout = new EzVarSequence("pupil function");
         }
     }
 

@@ -41,7 +41,7 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable,
 
 
     protected EzVarText       outputOption;  // Combobox for variance estimation
-    protected final static String[] outputOptions = new String[]{"Cartesian","Polar","Real part","Imaginary part","modulus","phase"};
+    protected final static String[] outputOptions = new String[]{"Cartesian","Polar","Real part","Imaginary part","modulus","phase","log(modulus)"};
 
     @Override
     protected void initialize()
@@ -65,7 +65,7 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable,
         addEzComponent(outputOption);
 
         if (isHeadLess()) {
-            output = new EzVarSequence("Propagated field Image");
+            output = new EzVarSequence("Output");
         }
     }
     @Override
@@ -211,6 +211,14 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable,
                         double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
                         double im = ((Double1D)outputArray.toDouble().as1D()).get(i+1);
                         ((Double1D)outputArray.toDouble().as1D()).set(i,Math.sqrt(re*re+im*im));
+                    }
+
+                }else     if(outputOption.getValue()==outputOptions[6] ){//modulus
+
+                    for(int i=0;i<outputArray.getNumber();i=i+2){
+                        double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
+                        double im = ((Double1D)outputArray.toDouble().as1D()).get(i+1);
+                        ((Double1D)outputArray.toDouble().as1D()).set(i,Math.log10(re*re+im*im+1E-15));
                     }
 
                 }else if(outputOption.getValue()==outputOptions[5] ){//phase

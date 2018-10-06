@@ -58,8 +58,8 @@ public class Propagate extends EzPlug implements Block, EzStoppable, PluginBundl
         input.setToolTipText("input with real and imaginary part in channel 0 and 1 respectively");
         dxy_nm = new EzVarDouble("dxy(nm):",64.5,0., Double.MAX_VALUE,1.);
         lambda = new EzVarDouble( "\u03BB(nm):",540.,10.,15000.,5);
-        ni = new EzVarDouble("ni:",1.,1.,2.,0.1);
-        depth = new EzVarDouble("depth (mm):",0,-100,100,.1);
+        ni = new EzVarDouble("ni:",1.,0.99,2.,0.05);
+        depth = new EzVarDouble("depth (mm):",0,-100,100,.001);
         outputOption = new EzVarText(      "Output:", outputOptions, false);
 
 

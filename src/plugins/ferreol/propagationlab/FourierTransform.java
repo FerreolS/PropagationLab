@@ -37,7 +37,7 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable, Pl
 
 
     protected EzVarText       outputOption;  // Combobox
-    protected final static String[] outputOptions = new String[]{"Cartesian","Polar","Real part","Imaginary part","modulus","phase","Squared modulus"};
+    protected final static String[] outputOptions = new String[]{"Cartesian","Polar","Real part","Imaginary part","modulus","phase","log(modulus)"};
     private Shape outputShape;
 
 
@@ -240,7 +240,7 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable, Pl
                     for(int i=0;i<outputArray.getNumber();i=i+2){
                         double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
                         double im = ((Double1D)outputArray.toDouble().as1D()).get(i+1);
-                        ((Double1D)outputArray.toDouble().as1D()).set(i,(re*re+im*im));
+                        ((Double1D)outputArray.toDouble().as1D()).set(i,1./2*Math.log10((re*re+im*im+1E-15)));
                     }
                 }
                 switch (outputArray.getRank()){
@@ -261,7 +261,7 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable, Pl
                 outputSequence.setChannelName(0, "Phase");
 
             }else if(outputOption.getValue()==outputOptions[6] ){//squared modulus
-                outputSequence.setChannelName(0, "Squared modulus");
+                outputSequence.setChannelName(0, "Log(modulus)");
             }else{
                 outputSequence.setChannelName(0, "Modulus");
                 if(outputOption.getValue()==outputOptions[1]){

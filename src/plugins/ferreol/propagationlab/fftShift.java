@@ -59,13 +59,18 @@ public class fftShift extends EzPlug implements Block, EzStoppable, PluginBundle
             }
             off[Math.min(inputArray.getRank()-1,2)] = 0;
             inputArray =  ArrayUtils.roll(inputArray,off).copy();
+            IcyImager.show(inputArray,outputSequence,Math.min(inputArray.getRank()-1,2),inputSequence.getName()+" shifted", isHeadLess() );
 
         }else{
             inputArray =  ArrayUtils.roll(inputArray).copy();
+            IcyImager.show(inputArray,outputSequence,inputSequence.getName()+" shifted", isHeadLess() );
+
         }
-        IcyImager.show(inputArray,outputSequence,inputSequence.getName()+" shifted", isHeadLess() );
 
 
+        if (isHeadLess()) {
+            output.setValue(outputSequence);
+        }
     }
     /* (non-Javadoc)
      * @see plugins.adufour.blocks.lang.Block#declareInput(plugins.adufour.blocks.util.VarList)
