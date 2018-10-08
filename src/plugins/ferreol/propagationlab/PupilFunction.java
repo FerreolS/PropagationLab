@@ -219,7 +219,7 @@ public class PupilFunction extends EzPlug implements Block, EzStoppable, PluginB
         inputMap.add("coma X", comaX.getVariable());
         inputMap.add("coma Y", comaY.getVariable());
         inputMap.add("spharical",spherical.getVariable());
-        inputMap.add("fftshift", fftshift.getVariable());
+        inputMap.add("fftshiftout", fftshift.getVariable());
         inputMap.add("outputOption", outputOption.getVariable());
     }
 

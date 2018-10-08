@@ -126,6 +126,8 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable, Pl
             }
             data = java.util.Arrays.copyOf(inputArray.toDouble().flatten(),2*inputArray.getNumber());
 
+            outputShape = new Shape(newdims);
+
             switch (inputArray.getRank()) {
                 case 1:{
                     DoubleFFT_1D FFT = new DoubleFFT_1D(inputArray.getDimension(0));
@@ -150,6 +152,10 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable, Pl
                 break;
 
                 case 3:{
+                    //outputArray = ArrayFactory.wrap(data,inputArray.getDimension(0),inputArray.getDimension(1),inputArray.getDimension(2),2);
+                    //               outputArray = (DoubleArray) outputArray.movedims(1, 0);
+                    //    data  = outputArray.toDouble().flatten();
+
                     DoubleFFT_3D FFT = new DoubleFFT_3D(inputArray.getDimension(0), inputArray.getDimension(1), inputArray.getDimension(2));
 
                     if (direction.getValue()){
@@ -298,7 +304,7 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable, Pl
         initialize();
         inputMap.add("input", input.getVariable());
         inputMap.add("direction", direction.getVariable());
-        inputMap.add("fftshift", fftshift.getVariable());
+        inputMap.add("fftshiftout", fftshift.getVariable());
         inputMap.add("outputOption", outputOption.getVariable());
 
     }

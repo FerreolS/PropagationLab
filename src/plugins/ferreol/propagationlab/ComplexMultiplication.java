@@ -80,7 +80,7 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable,
         ShapedArray inputArray1 =  Icy2TiPi.sequenceToArray(inputSequence1);
         ShapedArray inputArray2 = Icy2TiPi.sequenceToArray(inputSequence2);
         Sequence outputSequence= new Sequence();
-        outputSequence.copyMetaDataFrom(inputSequence1, false);
+        //  outputSequence.copyMetaDataFrom(inputSequence1, false);
         DoubleArray outputArray;
 
         Shape outputShape ;
