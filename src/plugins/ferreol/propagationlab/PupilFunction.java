@@ -73,7 +73,7 @@ public class PupilFunction extends EzPlug implements Block, EzStoppable, PluginB
         npix = new EzVarInteger("num pixel", 128,1, Integer.MAX_VALUE ,1);
         dxy_nm = new EzVarDouble("dxy(nm):",64.5,0., Double.MAX_VALUE,1.);
         lambda = new EzVarDouble( "\u03BB(nm):",540.,10.,15000.,5);
-        ni = new EzVarDouble("ni:",1.,1.,2.,0.1);
+        ni = new EzVarDouble("refractive index:",1.,1.,2.,0.1);
         na= new EzVarDouble("na:",1.,0.,2.,0.1);
         fftshift = new EzVarBoolean("FFT shift", false);
         outputOption = new EzVarText(      "Output type:", outputOptions, false);

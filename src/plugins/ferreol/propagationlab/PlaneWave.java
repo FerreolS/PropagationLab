@@ -45,7 +45,7 @@ public class PlaneWave extends EzPlug implements Block, PluginBundled {
         npix = new EzVarInteger("num pixel", 128,1, Integer.MAX_VALUE ,1);
         dxy_nm = new EzVarDouble("dxy(nm):",64.5,0., Double.MAX_VALUE,1.);
         lambda = new EzVarDouble( "\u03BB(nm):",540.,10.,15000.,5);
-        ni = new EzVarDouble("ni:",1.,1.,2.,0.1);
+        ni = new EzVarDouble("refractive index:",1.,1.,2.,0.1);
         anglex = new EzVarDouble("angle x:",0.,-90,90,5);
         angley = new EzVarDouble("angle y:",0.,-90,90,5);
 
@@ -115,7 +115,7 @@ public class PlaneWave extends EzPlug implements Block, PluginBundled {
         inputMap.add("dxy", dxy_nm.getVariable());
         inputMap.add("npix", npix.getVariable());
         inputMap.add("lambda", lambda.getVariable());
-        inputMap.add("ni", ni.getVariable());
+        inputMap.add("refractive index", ni.getVariable());
         inputMap.add("angle X", anglex.getVariable());
         inputMap.add("angle Y", angley.getVariable());
 
