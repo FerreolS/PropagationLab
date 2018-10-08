@@ -88,8 +88,8 @@ public class Pupil2PSF extends EzPlug implements Block, EzStoppable, PluginBundl
         dz_nm = new EzVarDouble("dz (nm):",64.5,0., Double.MAX_VALUE,1.);
         dxy_nm = new EzVarDouble("dxy(nm):",64.5,0., Double.MAX_VALUE,1.);
         lambda = new EzVarDouble( "\u03BB(nm):",540.,10.,15000.,5);
-        ni = new EzVarDouble("ni:",1.,1.,2.,0.1);
-        na= new EzVarDouble("na:",1.,0.,2.,0.1);
+        ni = new EzVarDouble("refractive index:",1.,1.,2.,0.1);
+        na= new EzVarDouble("NA:",1.,0.,2.,0.1);
         fftshiftout = new EzVarBoolean("FFT shift output", false);
 
         addEzComponent(pupil);
@@ -123,6 +123,8 @@ public class Pupil2PSF extends EzPlug implements Block, EzStoppable, PluginBundl
         if (pupilSequence==null){
             return;
         }
+
+        PSFSequence = new Sequence();
 
         DoubleArray tmpArray = Icy2TiPi.sequenceToArray(pupilSequence).toDouble();
 
@@ -371,8 +373,18 @@ public class Pupil2PSF extends EzPlug implements Block, EzStoppable, PluginBundl
     @Override
     public void declareInput(VarList inputMap) {
         initialize();
-        inputMap.add("pupil", pupil.getVariable());
+        inputMap.add("pupil function", pupil.getVariable());
         inputMap.add("input type", inputOption.getVariable());
+        inputMap.add("FFTshift intput", fftshiftin.getVariable());
+        inputMap.add("number of depth",ezNz.getVariable());
+        inputMap.add("dz (nm)", dz_nm.getVariable());
+        inputMap.add("dxy (nm)", dxy_nm.getVariable());
+        inputMap.add( "\u03BB(nm)",lambda.getVariable());
+        inputMap.add("Refractive index",ni.getVariable());
+        inputMap.add("NA",na.getVariable());
+        inputMap.add("FFTshift output",fftshiftout.getVariable());
+
+
 
     }
 
