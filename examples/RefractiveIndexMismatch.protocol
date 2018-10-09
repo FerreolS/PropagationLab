@@ -1,0 +1,207 @@
+<protocol VERSION="4">
+<blocks>
+<block ID="1356161589" blockType="plugins.adufour.blocks.tools.io.FileToSequence" className="plugins.adufour.blocks.tools.io.FileToSequence" collapsed="true" definedName="Single dot" height="108" keepsResults="true" width="198" xLocation="9" yLocation="38">
+<variables>
+<input>
+<variable ID="input file" name="input file" runtime="false" value="/Users/ferreol/Desktop/Mifobio/MA-formationImages/Point.tif" visible="true"/>
+<variable ID="Series" name="Series" runtime="false" value="0" visible="true"/>
+</input>
+<output>
+<variable ID="sequence" name="sequence" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1693516850" blockType="plugins.ferreol.PropagationLab.Propagate" className="PropagationLab" collapsed="false" definedName="Propagate" height="205" keepsResults="true" width="291" xLocation="22" yLocation="86">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+<variable ID="pixel size" name="dxy(nm):" runtime="false" value="100.0" visible="true"/>
+<variable ID="wavelength" name="λ(nm):" runtime="false" value="540.0" visible="true"/>
+<variable ID="refractive index" name="refractive index:" runtime="false" value="1.5" visible="true"/>
+<variable ID="depth" name="depth (mm):" runtime="false" value="0.01" visible="true"/>
+<variable ID="outputOption" name="Output:" runtime="false" value="Cartesian" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Propagated field Image" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1196339945" blockType="plugins.ferreol.PropagationLab.Propagate" className="PropagationLab" collapsed="false" definedName="Propagate" height="205" keepsResults="true" width="291" xLocation="430" yLocation="25">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+<variable ID="pixel size" name="dxy(nm):" runtime="false" visible="true"/>
+<variable ID="wavelength" name="λ(nm):" runtime="false" visible="true"/>
+<variable ID="refractive index" name="refractive index:" runtime="false" value="1.3599999999999999" visible="true"/>
+<variable ID="depth" name="depth (mm):" runtime="false" value="-0.01" visible="true"/>
+<variable ID="outputOption" name="Output:" runtime="false" value="Cartesian" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Propagated field Image" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="943096834" blockType="plugins.ferreol.PropagationLab.Propagate" className="PropagationLab" collapsed="false" definedName="Propagate" height="205" keepsResults="true" width="291" xLocation="436" yLocation="257">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+<variable ID="pixel size" name="dxy(nm):" runtime="false" visible="true"/>
+<variable ID="wavelength" name="λ(nm):" runtime="false" visible="true"/>
+<variable ID="refractive index" name="refractive index:" runtime="false" visible="true"/>
+<variable ID="depth" name="depth (mm):" runtime="false" visible="true"/>
+<variable ID="outputOption" name="Output:" runtime="false" value="Cartesian" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Propagated field Image" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1968783397" blockType="plugins.ferreol.PropagationLab.FourierTransform" className="PropagationLab" collapsed="true" definedName="Fourier transform" height="155" keepsResults="true" width="237" xLocation="753" yLocation="415">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+<variable ID="direction" name="Backward" runtime="false" value="false" visible="true"/>
+<variable ID="fftshiftout" name="FFT shift" runtime="false" value="true" visible="true"/>
+<variable ID="outputOption" name="Output:" runtime="false" value="Polar" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Output" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="950064896" blockType="plugins.ferreol.PropagationLab.FourierTransform" className="PropagationLab" collapsed="true" definedName="Fourier transform" height="155" keepsResults="true" width="274" xLocation="767" yLocation="157">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+<variable ID="direction" name="Backward" runtime="false" value="false" visible="true"/>
+<variable ID="fftshiftout" name="FFT shift" runtime="false" value="true" visible="true"/>
+<variable ID="outputOption" name="Output:" runtime="false" value="Polar" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Output" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1496162891" blockType="plugins.ferreol.PropagationLab.ComplexConvert" className="PropagationLab" collapsed="true" definedName="modulus" height="127" keepsResults="true" width="208" xLocation="28" yLocation="325">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+<variable ID="input type" name="input  type:" runtime="false" value="Cartesian" visible="true"/>
+<variable ID="output type" name="Output type:" runtime="false" value="modulus" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Output" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1937658912" blockType="plugins.ferreol.PropagationLab.fftShift" className="PropagationLab" collapsed="true" definedName="fft shift" height="83" keepsResults="true" width="246" xLocation="25" yLocation="368">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Output" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1555390024" blockType="plugins.ferreol.PropagationLab.ComplexConvert" className="PropagationLab" collapsed="true" definedName="modulus" height="127" keepsResults="true" width="208" xLocation="430" yLocation="478">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+<variable ID="input type" name="input  type:" runtime="false" value="Cartesian" visible="true"/>
+<variable ID="output type" name="Output type:" runtime="false" value="modulus" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Output" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1631786355" blockType="plugins.ferreol.PropagationLab.fftShift" className="PropagationLab" collapsed="true" definedName="fft shift" height="83" keepsResults="true" width="246" xLocation="591" yLocation="480">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Output" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1897485298" blockType="plugins.ylemontag.mathoperations.MathOperationExpressionBlock" className="plugins.ylemontag.mathoperations.MathOperationPlugin" collapsed="true" definedName="squared" height="288" keepsResults="true" width="329" xLocation="740" yLocation="481">
+<variables>
+<input>
+<variable ID="Operation" name="" runtime="false" value="x*x" visible="true"/>
+<variable ID="dyn-x" name="x" runtime="true" type="icy.sequence.Sequence" visible="true"/>
+</input>
+<output>
+<variable ID="Out" name="result" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1750000979" blockType="plugins.adufour.blocks.tools.Display" className="plugins.adufour.blocks.tools.Display" collapsed="false" definedName=" Spectrum without mismatch" height="241" keepsResults="true" width="316" xLocation="978" yLocation="303">
+<variables>
+<input>
+<variable ID="object" name="object" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block ID="579173049" blockType="plugins.adufour.blocks.tools.Display" className="plugins.adufour.blocks.tools.Display" collapsed="false" definedName="spectrum with RI mismatch" height="290" keepsResults="true" width="316" xLocation="981" yLocation="2">
+<variables>
+<input>
+<variable ID="object" name="object" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block ID="81805097" blockType="plugins.ylemontag.mathoperations.MathOperationExpressionBlock" className="plugins.ylemontag.mathoperations.MathOperationPlugin" collapsed="true" definedName="square" height="86" keepsResults="true" width="270" xLocation="20" yLocation="413">
+<variables>
+<input>
+<variable ID="Operation" name="" runtime="false" value="x*x" visible="true"/>
+<variable ID="dyn-x" name="x" runtime="true" type="icy.sequence.Sequence" visible="true"/>
+</input>
+<output>
+<variable ID="Out" name="result" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1824332210" blockType="plugins.adufour.blocks.tools.Display" className="plugins.adufour.blocks.tools.Display" collapsed="false" definedName="PSF with RI mismatch" height="241" keepsResults="true" width="316" xLocation="52" yLocation="510">
+<variables>
+<input>
+<variable ID="object" name="object" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block ID="971201731" blockType="plugins.adufour.blocks.tools.Display" className="plugins.adufour.blocks.tools.Display" collapsed="false" definedName="PSF without RI" height="241" keepsResults="true" width="316" xLocation="436" yLocation="546">
+<variables>
+<input>
+<variable ID="object" name="object" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+</blocks>
+<links>
+<link dstBlockID="1693516850" dstVarID="input" srcBlockID="1356161589" srcVarID="sequence"/>
+<link dstBlockID="943096834" dstVarID="refractive index" srcBlockID="1693516850" srcVarID="refractive index"/>
+<link dstBlockID="943096834" dstVarID="input" srcBlockID="1693516850" srcVarID="output"/>
+<link dstBlockID="1196339945" dstVarID="input" srcBlockID="1693516850" srcVarID="output"/>
+<link dstBlockID="1196339945" dstVarID="pixel size" srcBlockID="1693516850" srcVarID="pixel size"/>
+<link dstBlockID="1196339945" dstVarID="wavelength" srcBlockID="1693516850" srcVarID="wavelength"/>
+<link dstBlockID="943096834" dstVarID="pixel size" srcBlockID="1693516850" srcVarID="pixel size"/>
+<link dstBlockID="943096834" dstVarID="wavelength" srcBlockID="1693516850" srcVarID="wavelength"/>
+<link dstBlockID="943096834" dstVarID="depth" srcBlockID="1196339945" srcVarID="depth"/>
+<link dstBlockID="950064896" dstVarID="input" srcBlockID="1196339945" srcVarID="output"/>
+<link dstBlockID="1496162891" dstVarID="input" srcBlockID="1196339945" srcVarID="output"/>
+<link dstBlockID="1968783397" dstVarID="input" srcBlockID="943096834" srcVarID="output"/>
+<link dstBlockID="1555390024" dstVarID="input" srcBlockID="943096834" srcVarID="output"/>
+<link dstBlockID="1750000979" dstVarID="object" srcBlockID="1968783397" srcVarID="output"/>
+<link dstBlockID="579173049" dstVarID="object" srcBlockID="950064896" srcVarID="output"/>
+<link dstBlockID="1937658912" dstVarID="input" srcBlockID="1496162891" srcVarID="output"/>
+<link dstBlockID="81805097" dstVarID="dyn-x" srcBlockID="1937658912" srcVarID="output"/>
+<link dstBlockID="1631786355" dstVarID="input" srcBlockID="1555390024" srcVarID="output"/>
+<link dstBlockID="1897485298" dstVarID="dyn-x" srcBlockID="1631786355" srcVarID="output"/>
+<link dstBlockID="971201731" dstVarID="object" srcBlockID="1897485298" srcVarID="dyn-x" srcVarType="icy.sequence.Sequence"/>
+<link dstBlockID="1824332210" dstVarID="object" srcBlockID="81805097" srcVarID="Out" srcVarType="icy.sequence.Sequence"/>
+</links>
+</protocol>

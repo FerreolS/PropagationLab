@@ -1,0 +1,327 @@
+<protocol VERSION="4">
+<blocks>
+<block ID="1892839738" blockType="plugins.adufour.blocks.tools.io.FileToSequence" className="plugins.adufour.blocks.tools.io.FileToSequence" collapsed="false" definedName="USAF" height="108" keepsResults="true" width="198" xLocation="0" yLocation="6">
+<variables>
+<input>
+<variable ID="input file" name="input file" runtime="false" value="/Users/ferreol/Desktop/Mifobio/MA-formationImages/USAF_Inner2.tif" visible="true"/>
+<variable ID="Series" name="Series" runtime="false" value="0" visible="true"/>
+</input>
+<output>
+<variable ID="sequence" name="sequence" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="109076557" blockType="plugins.ferreol.PropagationLab.FourierTransform" className="PropagationLab" collapsed="true" definedName="Fourier transform" height="155" keepsResults="true" width="236" xLocation="206" yLocation="0">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+<variable ID="direction" name="Backward" runtime="false" value="false" visible="true"/>
+<variable ID="fftshift" name="FFT shift" runtime="false" value="true" visible="true"/>
+<variable ID="outputOption" name="Output:" runtime="false" value="Cartesian" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Output" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="710518377" blockType="plugins.ferreol.PropagationLab.PupilFunction" className="PropagationLab" collapsed="true" definedName="Pupil function" height="383" keepsResults="true" width="275" xLocation="234" yLocation="88">
+<variables>
+<input>
+<variable ID="npix" name="num pixel" runtime="false" value="1024" visible="true"/>
+<variable ID="pixel size" name="dxy(nm):" runtime="false" value="64.5" visible="true"/>
+<variable ID="wavelength" name="λ(nm):" runtime="false" value="540.0" visible="true"/>
+<variable ID="refractive index" name="ni:" runtime="false" value="1.51" visible="true"/>
+<variable ID="na" name="na:" runtime="false" value="1.400000000000001" visible="true"/>
+<variable ID="defocus" name="defocus" runtime="false" value="0.0" visible="true"/>
+<variable ID="astigmatism 0°" name="astigmatism 0°" runtime="false" value="0.0" visible="true"/>
+<variable ID="astigmatism 45°" name="astigmatism 45°" runtime="false" value="0.0" visible="true"/>
+<variable ID="coma X" name="vertical coma" runtime="false" value="-0.0" visible="true"/>
+<variable ID="coma Y" name="horizontal coma" runtime="false" value="0.0" visible="true"/>
+<variable ID="spharical" name="spherical" runtime="false" value="0.0" visible="true"/>
+<variable ID="fftshift" name="FFT shift" runtime="false" value="true" visible="true"/>
+<variable ID="outputOption" name="Output type:" runtime="false" value="Cartesian" visible="true"/>
+</input>
+<output>
+<variable ID="pupil" name="pupil function" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="932306386" blockType="plugins.ferreol.PropagationLab.ComplexMultiplication" className="PropagationLab" collapsed="true" definedName="Complex multiplication" height="149" keepsResults="true" width="328" xLocation="669" yLocation="53">
+<variables>
+<input>
+<variable ID="input 1" name="input 1 (Cartesian)" runtime="false" visible="true"/>
+<variable ID="input 2" name="input 2" runtime="false" visible="true"/>
+<variable ID="input2 type" name="input 2 type:" runtime="false" visible="true"/>
+<variable ID="outputOption" name="Output type:" runtime="false" value="log(modulus)" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Propagated field Image" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block CommandLineID="" ID="491103319" blockType="plugins.adufour.blocks.tools.input.Decimal" className="plugins.adufour.blocks.tools.input.Decimal" collapsed="false" definedName="Angle x" height="64" keepsResults="true" width="150" xLocation="0" yLocation="138">
+<variables>
+<input>
+<variable ID="decimal" name="decimal" runtime="false" value="30.0" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block CommandLineID="" ID="844004433" blockType="plugins.adufour.blocks.tools.input.Decimal" className="plugins.adufour.blocks.tools.input.Decimal" collapsed="false" definedName="Angle Y" height="64" keepsResults="true" width="151" xLocation="0" yLocation="214">
+<variables>
+<input>
+<variable ID="decimal" name="decimal" runtime="false" value="10.0" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<workflow ID="238204646" blockType="plugins.adufour.blocks.lang.WorkFlow" className="plugins.adufour.blocks.lang.WorkFlow" collapsed="true" definedName="Sine generator" height="447" keepsResults="true" width="655" xLocation="186" yLocation="143">
+<blocks>
+<block ID="212418593" blockType="plugins.ferreol.PropagationLab.PlaneWave" className="PropagationLab" collapsed="false" definedName="Plane wave" height="211" keepsResults="true" width="235" xLocation="26" yLocation="0">
+<variables>
+<input>
+<variable ID="dxy" name="dxy(nm):" runtime="false" visible="true"/>
+<variable ID="npix" name="num pixel" runtime="false" visible="true"/>
+<variable ID="lambda" name="λ(nm):" runtime="false" visible="true"/>
+<variable ID="ni" name="ni:" runtime="false" visible="true"/>
+<variable ID="angle X" name="angle x:" runtime="false" visible="true"/>
+<variable ID="angle Y" name="angle y:" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="outputWave" name="generated plane wave" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1571347120" blockType="plugins.ylemontag.mathoperations.MathOperationExpressionBlock" className="plugins.ylemontag.mathoperations.MathOperationPlugin" collapsed="false" definedName="Math operation expression" height="86" keepsResults="true" width="270" xLocation="315" yLocation="241">
+<variables>
+<input>
+<variable ID="Operation" name="" runtime="false" value="-x" visible="true"/>
+<variable ID="dyn-x" name="x" runtime="true" type="double" visible="true"/>
+</input>
+<output>
+<variable ID="Out" name="result" runtime="false" type="java.lang.Double" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="684039606" blockType="plugins.ylemontag.mathoperations.MathOperationExpressionBlock" className="plugins.ylemontag.mathoperations.MathOperationPlugin" collapsed="false" definedName="Math operation expression" height="88" keepsResults="true" width="270" xLocation="301" yLocation="129">
+<variables>
+<input>
+<variable ID="Operation" name="" runtime="false" value="-x" visible="true"/>
+<variable ID="dyn-x" name="x" runtime="true" type="double" visible="true"/>
+</input>
+<output>
+<variable ID="Out" name="result" runtime="false" type="java.lang.Double" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="586683095" blockType="plugins.ferreol.PropagationLab.PlaneWave" className="PropagationLab" collapsed="false" definedName="Plane wave" height="211" keepsResults="true" width="234" xLocation="621" yLocation="0">
+<variables>
+<input>
+<variable ID="dxy" name="dxy(nm):" runtime="false" visible="true"/>
+<variable ID="npix" name="num pixel" runtime="false" visible="true"/>
+<variable ID="lambda" name="λ(nm):" runtime="false" visible="true"/>
+<variable ID="ni" name="ni:" runtime="false" visible="true"/>
+<variable ID="angle X" name="angle x:" runtime="false" visible="true"/>
+<variable ID="angle Y" name="angle y:" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="outputWave" name="generated plane wave" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="365705131" blockType="plugins.ylemontag.mathoperations.MathOperationBinaryBlock" className="plugins.ylemontag.mathoperations.MathOperationPlugin" collapsed="false" definedName="Math operation binary" height="127" keepsResults="true" width="257" xLocation="164" yLocation="342">
+<variables>
+<input>
+<variable ID="Operation" name="op" runtime="false" value="ADD" visible="true"/>
+<variable ID="In 1" name="a" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+<variable ID="In 2" name="b" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</input>
+<output>
+<variable ID="Out" name="result" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="967566404" blockType="plugins.ferreol.PropagationLab.ComplexConvert" className="PropagationLab" collapsed="false" definedName="Complex convert" height="127" keepsResults="true" width="256" xLocation="472" yLocation="351">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+<variable ID="input type" name="input  type:" runtime="false" value="Cartesian" visible="true"/>
+<variable ID="output type" name="Output type:" runtime="false" value="modulus" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Output" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1901753043" blockType="plugins.ylemontag.mathoperations.MathOperationExpressionBlock" className="plugins.ylemontag.mathoperations.MathOperationPlugin" collapsed="false" definedName="Math operation expression" height="86" keepsResults="true" width="270" xLocation="603" yLocation="294">
+<variables>
+<input>
+<variable ID="Operation" name="" runtime="false" value="x*x" visible="true"/>
+<variable ID="dyn-x" name="x" runtime="true" type="icy.sequence.Sequence" visible="true"/>
+</input>
+<output>
+<variable ID="Out" name="result" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</output>
+</variables>
+</block>
+</blocks>
+<links>
+<link dstBlockID="365705131" dstVarID="In 1" srcBlockID="212418593" srcVarID="outputWave"/>
+<link dstBlockID="586683095" dstVarID="npix" srcBlockID="212418593" srcVarID="npix"/>
+<link dstBlockID="586683095" dstVarID="dxy" srcBlockID="212418593" srcVarID="dxy"/>
+<link dstBlockID="586683095" dstVarID="lambda" srcBlockID="212418593" srcVarID="lambda"/>
+<link dstBlockID="586683095" dstVarID="ni" srcBlockID="212418593" srcVarID="ni"/>
+<link dstBlockID="684039606" dstVarID="dyn-x" srcBlockID="212418593" srcVarID="angle X"/>
+<link dstBlockID="1571347120" dstVarID="dyn-x" srcBlockID="212418593" srcVarID="angle Y"/>
+<link dstBlockID="586683095" dstVarID="angle Y" srcBlockID="1571347120" srcVarID="Out" srcVarType="java.lang.Double"/>
+<link dstBlockID="586683095" dstVarID="angle X" srcBlockID="684039606" srcVarID="Out" srcVarType="java.lang.Double"/>
+<link dstBlockID="365705131" dstVarID="In 2" srcBlockID="586683095" srcVarID="outputWave"/>
+<link dstBlockID="967566404" dstVarID="input" srcBlockID="365705131" srcVarID="Out" srcVarType="icy.sequence.Sequence"/>
+<link dstBlockID="1901753043" dstVarID="dyn-x" srcBlockID="967566404" srcVarID="output"/>
+</links>
+<variables>
+<input>
+<variable ID="212418593:dxy" blockID="212418593" value="64.5" visible="true"/>
+<variable ID="212418593:npix" blockID="212418593" value="1024" visible="true"/>
+<variable ID="212418593:lambda" blockID="212418593" value="540.0" visible="true"/>
+<variable ID="212418593:ni" blockID="212418593" value="1.51" visible="true"/>
+<variable ID="212418593:angle X" blockID="212418593" value="30.0" visible="true"/>
+<variable ID="212418593:angle Y" blockID="212418593" value="10.0" visible="true"/>
+<variable ID="1571347120:Operation" blockID="1571347120" value="-x" visible="false"/>
+<variable ID="1571347120:dyn-x" blockID="1571347120" value="" visible="false"/>
+<variable ID="684039606:Operation" blockID="684039606" value="-x" visible="false"/>
+<variable ID="684039606:dyn-x" blockID="684039606" value="" visible="false"/>
+<variable ID="586683095:dxy" blockID="586683095" value="64.5" visible="false"/>
+<variable ID="586683095:npix" blockID="586683095" value="1024" visible="false"/>
+<variable ID="586683095:lambda" blockID="586683095" value="540.0" visible="false"/>
+<variable ID="586683095:ni" blockID="586683095" value="1.51" visible="false"/>
+<variable ID="586683095:angle X" blockID="586683095" value="-30.0" visible="false"/>
+<variable ID="586683095:angle Y" blockID="586683095" value="-10.0" visible="false"/>
+<variable ID="365705131:Operation" blockID="365705131" value="ADD" visible="false"/>
+<variable ID="365705131:In 1" blockID="365705131" value="" visible="false"/>
+<variable ID="365705131:In 2" blockID="365705131" value="" visible="false"/>
+<variable ID="967566404:input" blockID="967566404" visible="false"/>
+<variable ID="967566404:input type" blockID="967566404" value="Cartesian" visible="false"/>
+<variable ID="967566404:output type" blockID="967566404" value="modulus" visible="false"/>
+<variable ID="1901753043:Operation" blockID="1901753043" value="x*x" visible="false"/>
+<variable ID="1901753043:dyn-x" blockID="1901753043" value="" visible="false"/>
+</input>
+<output>
+<variable ID="212418593:outputWave" blockID="212418593" visible="false"/>
+<variable ID="1571347120:Out" blockID="1571347120" visible="false"/>
+<variable ID="684039606:Out" blockID="684039606" visible="false"/>
+<variable ID="586683095:outputWave" blockID="586683095" visible="false"/>
+<variable ID="365705131:Out" blockID="365705131" visible="false"/>
+<variable ID="967566404:output" blockID="967566404" visible="false"/>
+<variable ID="1901753043:Out" blockID="1901753043" visible="true"/>
+</output>
+</variables>
+</workflow>
+<block ID="1896448268" blockType="plugins.ylemontag.mathoperations.MathOperationBinaryBlock" className="plugins.ylemontag.mathoperations.MathOperationPlugin" collapsed="false" definedName="Math operation binary" height="127" keepsResults="true" width="241" xLocation="50" yLocation="382">
+<variables>
+<input>
+<variable ID="Operation" name="op" runtime="false" value="MULTIPLY" visible="true"/>
+<variable ID="In 1" name="a" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+<variable ID="In 2" name="b" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</input>
+<output>
+<variable ID="Out" name="result" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1911072811" blockType="plugins.ferreol.PropagationLab.FourierTransform" className="PropagationLab" collapsed="true" definedName="Fourier transform" height="143" keepsResults="true" width="226" xLocation="313" yLocation="438">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+<variable ID="direction" name="Backward" runtime="false" value="false" visible="true"/>
+<variable ID="fftshift" name="FFT shift" runtime="false" value="true" visible="true"/>
+<variable ID="outputOption" name="Output:" runtime="false" value="Cartesian" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Output" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1766317706" blockType="plugins.ferreol.PropagationLab.ComplexMultiplication" className="PropagationLab" collapsed="true" definedName="Complex multiplication" height="149" keepsResults="true" width="328" xLocation="644" yLocation="428">
+<variables>
+<input>
+<variable ID="input 1" name="input 1 (Cartesian)" runtime="false" visible="true"/>
+<variable ID="input 2" name="input 2" runtime="false" visible="true"/>
+<variable ID="input2 type" name="input 2 type:" runtime="false" visible="true"/>
+<variable ID="outputOption" name="Output type:" runtime="false" value="log(modulus)" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Propagated field Image" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="2006013085" blockType="plugins.ferreol.PropagationLab.FourierTransform" className="PropagationLab" collapsed="true" definedName="Fourier transform" height="155" keepsResults="true" width="253" xLocation="81" yLocation="610">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+<variable ID="direction" name="Backward" runtime="false" value="false" visible="true"/>
+<variable ID="fftshift" name="FFT shift" runtime="false" value="true" visible="true"/>
+<variable ID="outputOption" name="Output:" runtime="false" value="log(modulus)" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Output" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="616165795" blockType="plugins.adufour.blocks.tools.Display" className="plugins.adufour.blocks.tools.Display" collapsed="false" definedName="Modulated spectrum" height="241" keepsResults="true" width="316" xLocation="332" yLocation="501">
+<variables>
+<input>
+<variable ID="object" name="object" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block ID="1091855276" blockType="plugins.adufour.blocks.tools.Display" className="plugins.adufour.blocks.tools.Display" collapsed="false" definedName="SIM spectrum" height="339" keepsResults="true" width="316" xLocation="972" yLocation="330">
+<variables>
+<input>
+<variable ID="object" name="object" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block ID="1414367717" blockType="plugins.adufour.blocks.tools.Display" className="plugins.adufour.blocks.tools.Display" collapsed="false" definedName="pupil function" height="241" keepsResults="true" width="316" xLocation="622" yLocation="151">
+<variables>
+<input>
+<variable ID="object" name="object" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block ID="1497257357" blockType="plugins.adufour.blocks.tools.Display" className="plugins.adufour.blocks.tools.Display" collapsed="false" definedName="Widefield spectrum" height="315" keepsResults="true" width="316" xLocation="985" yLocation="3">
+<variables>
+<input>
+<variable ID="object" name="object" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+</blocks>
+<links>
+<link dstBlockID="1896448268" dstVarID="In 1" srcBlockID="1892839738" srcVarID="sequence"/>
+<link dstBlockID="109076557" dstVarID="input" srcBlockID="1892839738" srcVarID="sequence"/>
+<link dstBlockID="238204646" dstVarID="212418593:angle X" srcBlockID="491103319" srcVarID="decimal"/>
+<link dstBlockID="238204646" dstVarID="212418593:angle Y" srcBlockID="844004433" srcVarID="decimal"/>
+<link dstBlockID="1414367717" dstVarID="object" srcBlockID="710518377" srcVarID="pupil"/>
+<link dstBlockID="1766317706" dstVarID="input 1" srcBlockID="710518377" srcVarID="pupil"/>
+<link dstBlockID="238204646" dstVarID="212418593:npix" srcBlockID="710518377" srcVarID="npix"/>
+<link dstBlockID="238204646" dstVarID="212418593:dxy" srcBlockID="710518377" srcVarID="pixel size"/>
+<link dstBlockID="238204646" dstVarID="212418593:lambda" srcBlockID="710518377" srcVarID="wavelength"/>
+<link dstBlockID="238204646" dstVarID="212418593:ni" srcBlockID="710518377" srcVarID="refractive index"/>
+<link dstBlockID="932306386" dstVarID="input 1" srcBlockID="710518377" srcVarID="pupil"/>
+<link dstBlockID="1896448268" dstVarID="In 2" srcBlockID="238204646" srcVarID="1901753043:Out" srcVarType="icy.sequence.Sequence"/>
+<link dstBlockID="1911072811" dstVarID="input" srcBlockID="1896448268" srcVarID="Out" srcVarType="icy.sequence.Sequence"/>
+<link dstBlockID="2006013085" dstVarID="input" srcBlockID="1896448268" srcVarID="Out" srcVarType="icy.sequence.Sequence"/>
+<link dstBlockID="1766317706" dstVarID="input 2" srcBlockID="1911072811" srcVarID="output"/>
+<link dstBlockID="1766317706" dstVarID="input2 type" srcBlockID="1911072811" srcVarID="outputOption"/>
+<link dstBlockID="616165795" dstVarID="object" srcBlockID="2006013085" srcVarID="output"/>
+<link dstBlockID="932306386" dstVarID="input 2" srcBlockID="109076557" srcVarID="output"/>
+<link dstBlockID="932306386" dstVarID="input2 type" srcBlockID="109076557" srcVarID="outputOption"/>
+<link dstBlockID="1497257357" dstVarID="object" srcBlockID="932306386" srcVarID="output"/>
+<link dstBlockID="1091855276" dstVarID="object" srcBlockID="1766317706" srcVarID="output"/>
+</links>
+</protocol>
