@@ -11,6 +11,6 @@ These plugins are:
 - `FourierTransform`
 - `complex convert`
 - `complex multiplication`
-- `fftshift
+- `fftshift`
 
 In the example folder, these plugins are used in `icy protocols` to model several phenomena and setup for educationnal purpose.
