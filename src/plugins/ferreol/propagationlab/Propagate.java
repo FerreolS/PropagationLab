@@ -6,6 +6,7 @@ package plugins.ferreol.PropagationLab;
 import edu.emory.mathcs.jtransforms.fft.DoubleFFT_2D;
 import icy.plugin.interface_.PluginBundled;
 import icy.sequence.Sequence;
+import icy.util.StringUtil;
 import mitiv.array.Double3D;
 import mitiv.array.ShapedArray;
 import mitiv.base.Shape;
@@ -142,19 +143,19 @@ public class Propagate extends EzPlug implements Block, EzStoppable, PluginBundl
         FFT.complexInverse(data, true);
         outputArray =  Double3D.wrap(data,outputShape);
 
-        if(outputOption.getValue()==outputOptions[0] ){ // Cartesian
+        if(StringUtil.equals(outputOption.getValue(),outputOptions[0]) ){ // Cartesian
             IcyImager.show(outputArray,outputSequence,0,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
             outputSequence.setChannelName(0, "Real part");
             outputSequence.setChannelName(1, "Imaginary part");
 
-        }else if(outputOption.getValue()==outputOptions[2] ){//Real part
+        }else if(StringUtil.equals(outputOption.getValue(),outputOptions[2] )){//Real part
             IcyImager.show( outputArray.slice(0,0),outputSequence,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
             outputSequence.setChannelName(0, "Real part");
-        }else if(outputOption.getValue()==outputOptions[3] ){// imaginary part
+        }else if(StringUtil.equals(outputOption.getValue(),outputOptions[3] )){// imaginary part
             IcyImager.show( outputArray.slice(1,0),outputSequence,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
             outputSequence.setChannelName(0, "Imaginary part");
         }else{
-            if(outputOption.getValue()==outputOptions[1] ){ //Polar
+            if(StringUtil.equals(outputOption.getValue(),outputOptions[1] )){ //Polar
                 for(int i=0;i<outputArray.getNumber();i=i+2){
                     double re = outputArray.toDouble().as1D().get(i);
                     double im = outputArray.toDouble().as1D().get(i+1);
@@ -162,14 +163,14 @@ public class Propagate extends EzPlug implements Block, EzStoppable, PluginBundl
                     outputArray.toDouble().as1D().set(i+1,Math.atan2(im,re));
                 }
                 IcyImager.show(outputArray,outputSequence,0,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
-            }else if(outputOption.getValue()==outputOptions[4] ){//modulus
+            }else if(StringUtil.equals(outputOption.getValue(),outputOptions[4])){//modulus
                 for(int i=0;i<outputArray.getNumber();i=i+2){
                     double re = outputArray.toDouble().as1D().get(i);
                     double im = outputArray.toDouble().as1D().get(i+1);
                     outputArray.toDouble().as1D().set(i,Math.sqrt(re*re+im*im));
                 }
 
-            }else if(outputOption.getValue()==outputOptions[5] ){//phase
+            }else if(StringUtil.equals(outputOption.getValue(),outputOptions[5] )){//phase
 
                 for(int i=0;i<outputArray.getNumber();i=i+2){
                     double re = outputArray.toDouble().as1D().get(i);
@@ -177,7 +178,7 @@ public class Propagate extends EzPlug implements Block, EzStoppable, PluginBundl
                     outputArray.toDouble().as1D().set(i,Math.atan2(im,re));
                 }
 
-            }else if(outputOption.getValue()==outputOptions[6] ){//squared modulus
+            }else if(StringUtil.equals(outputOption.getValue(),outputOptions[6] )){//squared modulus
 
                 for(int i=0;i<outputArray.getNumber();i=i+2){
                     double re = outputArray.toDouble().as1D().get(i);
@@ -186,14 +187,14 @@ public class Propagate extends EzPlug implements Block, EzStoppable, PluginBundl
                 }
             }
             IcyImager.show( outputArray.slice(0,0),outputSequence,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
-            if(outputOption.getValue()==outputOptions[5] ){//phase
+            if(StringUtil.equals(outputOption.getValue(),outputOptions[5]) ){//phase
                 outputSequence.setChannelName(0, "Phase");
 
-            }else if(outputOption.getValue()==outputOptions[6] ){//squared modulus
+            }else if(StringUtil.equals(outputOption.getValue(),outputOptions[6] )){//squared modulus
                 outputSequence.setChannelName(0, "Squared modulus");
             }else{
                 outputSequence.setChannelName(0, "Modulus");
-                if(outputOption.getValue()==outputOptions[1]){
+                if(StringUtil.equals(outputOption.getValue(),outputOptions[1])){
                     outputSequence.setChannelName(1, "Phase");
                 }
             }

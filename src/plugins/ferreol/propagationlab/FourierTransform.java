@@ -6,6 +6,7 @@ import edu.emory.mathcs.jtransforms.fft.DoubleFFT_2D;
 import edu.emory.mathcs.jtransforms.fft.DoubleFFT_3D;
 import icy.plugin.interface_.PluginBundled;
 import icy.sequence.Sequence;
+import icy.util.StringUtil;
 import mitiv.array.ArrayFactory;
 import mitiv.array.ArrayUtils;
 import mitiv.array.Double1D;
@@ -182,12 +183,12 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable, Pl
             outputArray = (DoubleArray) ArrayUtils.roll(outputArray,off).copy();
         }
 
-        if(outputOption.getValue()==outputOptions[0] ){ // Cartesian
+        if(StringUtil.equals(outputOption.getValue(),outputOptions[0])){ // Cartesian
             IcyImager.show(outputArray,outputSequence,0,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
             outputSequence.setChannelName(0, "Real part");
             outputSequence.setChannelName(1, "Imaginary part");
 
-        }else if(outputOption.getValue()==outputOptions[2] ){//Real part
+        }else if(StringUtil.equals(outputOption.getValue(),outputOptions[2])){//Real part
             switch (outputArray.getRank()){
                 case 2:
                     IcyImager.show( ((Double2D) outputArray).slice(0,0),outputSequence,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
@@ -200,7 +201,7 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable, Pl
                     break;
             }
             outputSequence.setChannelName(0, "Real part");
-        }else if(outputOption.getValue()==outputOptions[3] ){// imaginary part
+        }else if(StringUtil.equals(outputOption.getValue(),outputOptions[3] )){// imaginary part
             switch (outputArray.getRank()){
                 case 2:
                     IcyImager.show( ((Double2D) outputArray).slice(1,0),outputSequence,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
@@ -214,7 +215,7 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable, Pl
             }
             outputSequence.setChannelName(0, "Imaginary part");
         }else{
-            if(outputOption.getValue()==outputOptions[1] ){ //Polar
+            if(StringUtil.equals(outputOption.getValue(),outputOptions[1]) ){ //Polar
 
                 for(int i=0;i<outputArray.getNumber();i=i+2){
                     double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
@@ -225,7 +226,7 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable, Pl
                 IcyImager.show(outputArray,outputSequence,0,"Fourier transform of "+inputSequence.getName(), isHeadLess() );
 
             }else{
-                if(outputOption.getValue()==outputOptions[4] ){//modulus
+                if(StringUtil.equals(outputOption.getValue(),outputOptions[4])){//modulus
 
                     for(int i=0;i<outputArray.getNumber();i=i+2){
                         double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
@@ -233,7 +234,7 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable, Pl
                         ((Double1D)outputArray.toDouble().as1D()).set(i,Math.sqrt(re*re+im*im));
                     }
 
-                }else if(outputOption.getValue()==outputOptions[5] ){//phase
+                }else if(StringUtil.equals(outputOption.getValue(),outputOptions[5] )){//phase
 
                     for(int i=0;i<outputArray.getNumber();i=i+2){
                         double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
@@ -241,7 +242,7 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable, Pl
                         ((Double1D)outputArray.toDouble().as1D()).set(i,Math.atan2(im,re));
                     }
 
-                }else if(outputOption.getValue()==outputOptions[6] ){//squared modulus
+                }else if(StringUtil.equals(outputOption.getValue(),outputOptions[6] )){//squared modulus
 
                     for(int i=0;i<outputArray.getNumber();i=i+2){
                         double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
@@ -263,14 +264,14 @@ public class FourierTransform  extends EzPlug  implements Block, EzStoppable, Pl
                 }
                 //  outputSequence.getFirstViewer().getLut().getLutChannel(0).setColorMap(new IceColorMap(),false);
             }
-            if(outputOption.getValue()==outputOptions[5] ){//phase
+            if(StringUtil.equals(outputOption.getValue(),outputOptions[5]) ){//phase
                 outputSequence.setChannelName(0, "Phase");
 
-            }else if(outputOption.getValue()==outputOptions[6] ){//squared modulus
+            }else if(StringUtil.equals(outputOption.getValue(),outputOptions[6])){//squared modulus
                 outputSequence.setChannelName(0, "Log(modulus)");
             }else{
                 outputSequence.setChannelName(0, "Modulus");
-                if(outputOption.getValue()==outputOptions[1]){
+                if(StringUtil.equals(outputOption.getValue(),outputOptions[1])){
                     outputSequence.setChannelName(1, "Phase");
                 }
             }

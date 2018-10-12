@@ -5,6 +5,7 @@ package plugins.ferreol.PropagationLab;
 
 import icy.plugin.interface_.PluginBundled;
 import icy.sequence.Sequence;
+import icy.util.StringUtil;
 import mitiv.array.ArrayFactory;
 import mitiv.array.Double1D;
 import mitiv.array.Double2D;
@@ -96,7 +97,7 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable,
 
 
         double [] data1 = inputArray1.toDouble().flatten();
-        if(inputOption2.getValue()==outputOptions[0] ){ //Cartesian
+        if(StringUtil.equals(inputOption2.getValue(),outputOptions[0]) ){ //Cartesian
 
             /*   if (!outputShape.equals(inputArray2.getShape())){
                 throw new IllegalArgumentException("Both input should have the same shape");
@@ -111,7 +112,7 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable,
                 data1[2*nx]= re1*re2-im1*im2;
                 data1[2*nx+1]=  re1*im2+im1*re2;
             }
-        }else if(inputOption2.getValue()==outputOptions[1] ){//Polar
+        }else if(StringUtil.equals(inputOption2.getValue(),outputOptions[1] )){//Polar
             /*        if (!outputShape.equals(inputArray2.getShape())){
                 throw new IllegalArgumentException("Both input should have the same shape");
             }
@@ -128,7 +129,7 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable,
                 data1[2*nx]= mod2*(re1*cosphase2- im1*sinphase2);
                 data1[2*nx+1]= mod2*(re1*sinphase2- im1*cosphase2);
             }
-        }else if((inputOption2.getValue()==outputOptions[2] )||(inputOption2.getValue()==outputOptions[4] )){//Real or modulus
+        }else if((StringUtil.equals(inputOption2.getValue(),outputOptions[2] ))||(StringUtil.equals(inputOption2.getValue(),outputOptions[4]) )){//Real or modulus
             double [] data2 = inputArray2.toDouble().flatten();
 
             for (int nx = 0; nx < inputArray1.getNumber()/2; nx++){
@@ -136,7 +137,7 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable,
                 data1[2*nx+1]*=  data2[nx];
             }
 
-        }else if(inputOption2.getValue()==outputOptions[3] ){//Imaginary
+        }else if(StringUtil.equals(inputOption2.getValue(),outputOptions[3] )){//Imaginary
             double [] data2 = inputArray2.toDouble().flatten();
 
             for (int nx = 0; nx < inputArray1.getNumber()/2; nx++){
@@ -147,7 +148,7 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable,
                 data1[2*nx+1]=  re1*im2;
             }
 
-        }else  if(inputOption2.getValue()==outputOptions[5] ){//phase
+        }else  if(StringUtil.equals(inputOption2.getValue(),outputOptions[5] )){//phase
             double [] data2 = inputArray2.toDouble().flatten();
 
             for (int nx = 0; nx < inputArray1.getNumber()/2; nx++){
@@ -162,12 +163,12 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable,
         outputArray = ArrayFactory.wrap(data1, outputShape);
 
 
-        if(outputOption.getValue()==outputOptions[0] ){ // Cartesian
+        if(StringUtil.equals(outputOption.getValue(),outputOptions[0] )){ // Cartesian
             IcyImager.show(outputArray,outputSequence,0,inputSequence1.getName()+ " X " + inputSequence2.getName(), isHeadLess() );
             outputSequence.setChannelName(0, "Real part");
             outputSequence.setChannelName(1, "Imaginary part");
 
-        }else if(outputOption.getValue()==outputOptions[2] ){//Real part
+        }else if(StringUtil.equals(outputOption.getValue(),outputOptions[2]) ){//Real part
             switch (outputArray.getRank()){
                 case 2:
                     IcyImager.show( ((Double2D) outputArray).slice(0,0),outputSequence,inputSequence1.getName()+ " X " + inputSequence2.getName(), isHeadLess() );
@@ -180,7 +181,7 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable,
                     break;
             }
             outputSequence.setChannelName(0, "Real part");
-        }else if(outputOption.getValue()==outputOptions[3] ){// imaginary part
+        }else if(StringUtil.equals(outputOption.getValue(),outputOptions[3] )){// imaginary part
             switch (outputArray.getRank()){
                 case 2:
                     IcyImager.show( ((Double2D) outputArray).slice(1,0),outputSequence,inputSequence1.getName()+ " X " + inputSequence2.getName(), isHeadLess() );
@@ -194,7 +195,7 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable,
             }
             outputSequence.setChannelName(0, "Imaginary part");
         }else{
-            if(outputOption.getValue()==outputOptions[1] ){ //Polar
+            if(StringUtil.equals(outputOption.getValue(),outputOptions[1]) ){ //Polar
 
                 for(int i=0;i<outputArray.getNumber();i=i+2){
                     double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
@@ -205,7 +206,7 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable,
                 IcyImager.show(outputArray,outputSequence,0,inputSequence1.getName()+ " X " + inputSequence2.getName(), isHeadLess() );
 
             }else{
-                if(outputOption.getValue()==outputOptions[4] ){//modulus
+                if(StringUtil.equals(outputOption.getValue(),outputOptions[4]) ){//modulus
 
                     for(int i=0;i<outputArray.getNumber();i=i+2){
                         double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
@@ -213,7 +214,7 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable,
                         ((Double1D)outputArray.toDouble().as1D()).set(i,Math.sqrt(re*re+im*im));
                     }
 
-                }else     if(outputOption.getValue()==outputOptions[6] ){//modulus
+                }else     if(StringUtil.equals(outputOption.getValue(),outputOptions[6] )){//modulus
 
                     for(int i=0;i<outputArray.getNumber();i=i+2){
                         double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
@@ -221,7 +222,7 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable,
                         ((Double1D)outputArray.toDouble().as1D()).set(i,Math.log10(re*re+im*im+1E-15));
                     }
 
-                }else if(outputOption.getValue()==outputOptions[5] ){//phase
+                }else if(StringUtil.equals(outputOption.getValue(),outputOptions[5]) ){//phase
 
                     for(int i=0;i<outputArray.getNumber();i=i+2){
                         double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
@@ -244,11 +245,11 @@ public class ComplexMultiplication extends EzPlug implements Block, EzStoppable,
                 }
                 //  outputSequence.getFirstViewer().getLut().getLutChannel(0).setColorMap(new IceColorMap(),false);
             }
-            if(outputOption.getValue()==outputOptions[5] ){//phase
+            if(StringUtil.equals(outputOption.getValue(),outputOptions[5] )){//phase
                 outputSequence.setChannelName(0, "Phase");
             }else{
                 outputSequence.setChannelName(0, "Modulus");
-                if(outputOption.getValue()==outputOptions[1]){
+                if(StringUtil.equals(outputOption.getValue(),outputOptions[1])){
                     outputSequence.setChannelName(1, "Phase");
                 }
             }

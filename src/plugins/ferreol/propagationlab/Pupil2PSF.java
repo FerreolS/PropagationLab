@@ -14,6 +14,7 @@ import java.util.concurrent.Future;
 import edu.emory.mathcs.jtransforms.fft.DoubleFFT_2D;
 import icy.plugin.interface_.PluginBundled;
 import icy.sequence.Sequence;
+import icy.util.StringUtil;
 import mitiv.array.ArrayUtils;
 import mitiv.array.Double1D;
 import mitiv.array.Double2D;
@@ -138,7 +139,7 @@ public class Pupil2PSF extends EzPlug implements Block, EzStoppable, PluginBundl
         pupilArray = (Double3D) tmpArray.movedims(2, 0).toDouble().copy();
         Nxy = pupilArray.getDimension(1);
 
-        if(inputOption.getValue()==inputOptions[0]){
+        if(StringUtil.equals(inputOption.getValue(),inputOptions[0])){
             cartesian2polar(pupilArray);
         }
 

@@ -9,6 +9,7 @@ import icy.plugin.interface_.PluginBundled;
 import icy.sequence.MetaDataUtil;
 import icy.sequence.Sequence;
 import icy.util.OMEUtil;
+import icy.util.StringUtil;
 import loci.formats.ome.OMEXMLMetadataImpl;
 import microTiPi.microUtils.Zernike;
 import mitiv.array.ArrayFactory;
@@ -174,7 +175,7 @@ public class PupilFunction extends EzPlug implements Block, EzStoppable, PluginB
         pupilSequence.setPixelSizeX(1./(dxy_nm.getValue()*1E-3*Nx));
         pupilSequence.setPixelSizeY(1./(dxy_nm.getValue()*1E-3*Ny));
 
-        if(outputOption.getValue()==outputOptions[0] ){ // Cartesian
+        if(StringUtil.equals(outputOption.getValue(),outputOptions[0] )){ // Cartesian
             double [] data = pupilArray.flatten();
 
             for (int nx = 0; nx < pupilArray.getNumber()/2; nx++){

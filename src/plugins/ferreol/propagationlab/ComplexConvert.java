@@ -5,6 +5,7 @@ package plugins.ferreol.PropagationLab;
 
 import icy.plugin.interface_.PluginBundled;
 import icy.sequence.Sequence;
+import icy.util.StringUtil;
 import mitiv.array.Double1D;
 import mitiv.array.Double2D;
 import mitiv.array.Double3D;
@@ -68,7 +69,7 @@ public class ComplexConvert extends EzPlug implements Block, EzStoppable,PluginB
         outputSequence.copyMetaDataFrom(inputSequence, false);
 
 
-        if(inputOption.getValue()==outputOption.getValue() ){
+        if(StringUtil.equals(inputOption.getValue(),outputOption.getValue() )){
 
 
             if (isHeadLess()) {
@@ -86,8 +87,8 @@ public class ComplexConvert extends EzPlug implements Block, EzStoppable,PluginB
         }
 
 
-        if(inputOption.getValue()==inputOptions[0]){ // Cartesian input
-            if(outputOption.getValue()==outputOptions[2] ){//Real part
+        if(StringUtil.equals(inputOption.getValue(),inputOptions[0])){ // Cartesian input
+            if(StringUtil.equals(outputOption.getValue(),outputOptions[2]) ){//Real part
                 switch (outputArray.getRank()){
                     case 2:
                         IcyImager.show( ((Double2D) outputArray).slice(0,0),outputSequence,inputSequence.getName(), isHeadLess() );
@@ -100,7 +101,7 @@ public class ComplexConvert extends EzPlug implements Block, EzStoppable,PluginB
                         break;
                 }
                 outputSequence.setChannelName(0, "Real part");
-            }else if(outputOption.getValue()==outputOptions[3] ){// imaginary part
+            }else if(StringUtil.equals(outputOption.getValue(),outputOptions[3]) ){// imaginary part
                 switch (outputArray.getRank()){
                     case 2:
                         IcyImager.show( ((Double2D) outputArray).slice(1,0),outputSequence,inputSequence.getName(), isHeadLess() );
@@ -114,7 +115,7 @@ public class ComplexConvert extends EzPlug implements Block, EzStoppable,PluginB
                 }
                 outputSequence.setChannelName(0, "Imaginary part");
             }else{
-                if(outputOption.getValue()==outputOptions[1] ){ ///Polar output
+                if(StringUtil.equals(outputOption.getValue(),outputOptions[1] )){ ///Polar output
                     for(int i=0;i<outputArray.getNumber();i=i+2){
                         double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
                         double im = ((Double1D)outputArray.toDouble().as1D()).get(i+1);
@@ -123,7 +124,7 @@ public class ComplexConvert extends EzPlug implements Block, EzStoppable,PluginB
                     }
                     IcyImager.show(outputArray,outputSequence,0,inputSequence.getName(), isHeadLess() );
                 } else{
-                    if(outputOption.getValue()==outputOptions[4] ){//modulus
+                    if(StringUtil.equals(outputOption.getValue(),outputOptions[4] )){//modulus
 
                         for(int i=0;i<outputArray.getNumber();i=i+2){
                             double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
@@ -131,7 +132,7 @@ public class ComplexConvert extends EzPlug implements Block, EzStoppable,PluginB
                             ((Double1D)outputArray.toDouble().as1D()).set(i,Math.sqrt(re*re+im*im));
                         }
 
-                    }else if(outputOption.getValue()==outputOptions[5] ){//phase
+                    }else if(StringUtil.equals(outputOption.getValue(),outputOptions[5])){//phase
 
                         for(int i=0;i<outputArray.getNumber();i=i+2){
                             double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
@@ -139,7 +140,7 @@ public class ComplexConvert extends EzPlug implements Block, EzStoppable,PluginB
                             ((Double1D)outputArray.toDouble().as1D()).set(i,Math.atan2(im,re));
                         }
 
-                    }else if(outputOption.getValue()==outputOptions[6] ){//log modulus
+                    }else if(StringUtil.equals(outputOption.getValue(),outputOptions[6] )){//log modulus
 
                         for(int i=0;i<outputArray.getNumber();i=i+2){
                             double re = ((Double1D)outputArray.toDouble().as1D()).get(i);
@@ -159,14 +160,14 @@ public class ComplexConvert extends EzPlug implements Block, EzStoppable,PluginB
                             break;
                     }
                 }
-                if(outputOption.getValue()==outputOptions[5] ){//phase
+                if(StringUtil.equals(outputOption.getValue(),outputOptions[5] )){//phase
                     outputSequence.setChannelName(0, "Phase");
 
-                }else if(outputOption.getValue()==outputOptions[6] ){//squared modulus
+                }else if(StringUtil.equals(outputOption.getValue(),outputOptions[6]) ){//squared modulus
                     outputSequence.setChannelName(0, "Log(modulus)");
                 }else{
                     outputSequence.setChannelName(0, "Modulus");
-                    if(outputOption.getValue()==outputOptions[1]){
+                    if(StringUtil.equals(outputOption.getValue(),outputOptions[1])){
                         outputSequence.setChannelName(1, "Phase");
                     }
                 }
@@ -181,12 +182,12 @@ public class ComplexConvert extends EzPlug implements Block, EzStoppable,PluginB
                 ((Double1D)outputArray.toDouble().as1D()).set(i+1,mod*Math.sin(ph));
             }
 
-            if(outputOption.getValue()==outputOptions[0] ){
+            if(StringUtil.equals(outputOption.getValue(),outputOptions[0] )){
                 IcyImager.show(outputArray,outputSequence,0,inputSequence.getName(), isHeadLess() );
                 outputSequence.setChannelName(0, "Real part");
                 outputSequence.setChannelName(1, "Imaginary part");
             }
-            if(outputOption.getValue()==outputOptions[2] ){//Real part
+            if(StringUtil.equals(outputOption.getValue(),outputOptions[2]) ){//Real part
                 switch (outputArray.getRank()){
                     case 2:
                         IcyImager.show( ((Double2D) outputArray).slice(0,0),outputSequence,inputSequence.getName(), isHeadLess() );
@@ -199,7 +200,7 @@ public class ComplexConvert extends EzPlug implements Block, EzStoppable,PluginB
                         break;
                 }
                 outputSequence.setChannelName(0, "Real part");
-            }else if(outputOption.getValue()==outputOptions[3] ){// imaginary part
+            }else if(StringUtil.equals(outputOption.getValue(),outputOptions[3]) ){// imaginary part
                 switch (outputArray.getRank()){
                     case 2:
                         IcyImager.show( ((Double2D) outputArray).slice(1,0),outputSequence,inputSequence.getName(), isHeadLess() );
