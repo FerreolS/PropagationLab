@@ -1,6 +1,6 @@
 <protocol VERSION="4">
 <blocks>
-<block ID="1038705281" blockType="plugins.adufour.blocks.tools.io.FileToSequence" className="plugins.adufour.blocks.tools.io.FileToSequence" collapsed="true" definedName="USAF" height="108" keepsResults="true" width="198" xLocation="0" yLocation="1">
+<block ID="1038705281" blockType="plugins.adufour.blocks.tools.io.FileToSequence" className="plugins.adufour.blocks.tools.io.FileToSequence" collapsed="true" definedName="Incoming wave" height="108" keepsResults="true" width="198" xLocation="0" yLocation="11">
 <variables>
 <input>
 <variable ID="input file" name="input file" runtime="false" value="/Users/ferreol/Desktop/Mifobio/MA-formationImages/USAF_Inner2.tif" visible="true"/>
@@ -17,23 +17,8 @@
 <variable ID="input" name="input" runtime="false" visible="true"/>
 <variable ID="pixel size" name="dxy(nm):" runtime="false" value="64.5" visible="true"/>
 <variable ID="wavelength" name="λ(nm):" runtime="false" value="540.0" visible="true"/>
-<variable ID="refractive index" name="ni:" runtime="false" value="1.5" visible="true"/>
+<variable ID="refractive index" name="refractive index:" runtime="false" value="1.5" visible="true"/>
 <variable ID="depth" name="depth (mm):" runtime="false" value="0.30000000000000004" visible="true"/>
-<variable ID="outputOption" name="Output:" runtime="false" value="Cartesian" visible="true"/>
-</input>
-<output>
-<variable ID="output" name="Propagated field Image" runtime="false" visible="true"/>
-</output>
-</variables>
-</block>
-<block ID="303685821" blockType="plugins.ferreol.PropagationLab.Propagate" className="PropagationLab" collapsed="false" definedName="Propagate" height="205" keepsResults="true" width="256" xLocation="218" yLocation="409">
-<variables>
-<input>
-<variable ID="input" name="input" runtime="false" visible="true"/>
-<variable ID="pixel size" name="dxy(nm):" runtime="false" visible="true"/>
-<variable ID="wavelength" name="λ(nm):" runtime="false" visible="true"/>
-<variable ID="refractive index" name="ni:" runtime="false" value="1.05" visible="true"/>
-<variable ID="depth" name="depth (mm):" runtime="false" value="0.001" visible="true"/>
 <variable ID="outputOption" name="Output:" runtime="false" value="Cartesian" visible="true"/>
 </input>
 <output>
@@ -47,8 +32,23 @@
 <variable ID="input" name="input" runtime="false" visible="true"/>
 <variable ID="pixel size" name="dxy(nm):" runtime="false" visible="true"/>
 <variable ID="wavelength" name="λ(nm):" runtime="false" visible="true"/>
-<variable ID="refractive index" name="ni:" runtime="false" visible="true"/>
+<variable ID="refractive index" name="refractive index:" runtime="false" value="1.0" visible="true"/>
 <variable ID="depth" name="depth (mm):" runtime="false" value="1.0" visible="true"/>
+<variable ID="outputOption" name="Output:" runtime="false" value="Cartesian" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Propagated field Image" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="303685821" blockType="plugins.ferreol.PropagationLab.Propagate" className="PropagationLab" collapsed="false" definedName="Propagate" height="205" keepsResults="true" width="256" xLocation="204" yLocation="473">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+<variable ID="pixel size" name="dxy(nm):" runtime="false" visible="true"/>
+<variable ID="wavelength" name="λ(nm):" runtime="false" visible="true"/>
+<variable ID="refractive index" name="refractive index:" runtime="false" visible="true"/>
+<variable ID="depth" name="depth (mm):" runtime="false" value="0.001" visible="true"/>
 <variable ID="outputOption" name="Output:" runtime="false" value="Cartesian" visible="true"/>
 </input>
 <output>
@@ -95,7 +95,7 @@
 </output>
 </variables>
 </block>
-<block ID="1269880937" blockType="plugins.adufour.blocks.tools.Display" className="plugins.adufour.blocks.tools.Display" collapsed="false" definedName="powerspectrum   (glass)" height="241" keepsResults="true" width="316" xLocation="679" yLocation="0">
+<block ID="1269880937" blockType="plugins.adufour.blocks.tools.Display" className="plugins.adufour.blocks.tools.Display" collapsed="false" definedName="powerspectrum   (glass)" height="241" keepsResults="true" width="316" xLocation="746" yLocation="0">
 <variables>
 <input>
 <variable ID="object" name="object" runtime="false" type="icy.sequence.Sequence" visible="true"/>
@@ -103,7 +103,7 @@
 <output/>
 </variables>
 </block>
-<block ID="2138988769" blockType="plugins.adufour.blocks.tools.Display" className="plugins.adufour.blocks.tools.Display" collapsed="false" definedName=" powerspectrum with evanescent wave" height="241" keepsResults="true" width="342" xLocation="710" yLocation="356">
+<block ID="2138988769" blockType="plugins.adufour.blocks.tools.Display" className="plugins.adufour.blocks.tools.Display" collapsed="false" definedName=" powerspectrum with evanescent wave" height="241" keepsResults="true" width="342" xLocation="726" yLocation="475">
 <variables>
 <input>
 <variable ID="object" name="object" runtime="false" type="icy.sequence.Sequence" visible="true"/>
@@ -111,7 +111,7 @@
 <output/>
 </variables>
 </block>
-<block ID="1616066861" blockType="plugins.adufour.blocks.tools.Display" className="plugins.adufour.blocks.tools.Display" collapsed="false" definedName="powerspectrum (air)" height="241" keepsResults="true" width="316" xLocation="960" yLocation="145">
+<block ID="1616066861" blockType="plugins.adufour.blocks.tools.Display" className="plugins.adufour.blocks.tools.Display" collapsed="false" definedName="powerspectrum (air)" height="241" keepsResults="true" width="316" xLocation="740" yLocation="233">
 <variables>
 <input>
 <variable ID="object" name="object" runtime="false" type="icy.sequence.Sequence" visible="true"/>
@@ -130,10 +130,10 @@
 <link dstBlockID="1595038977" dstVarID="pixel size" srcBlockID="1843815922" srcVarID="pixel size"/>
 <link dstBlockID="1595038977" dstVarID="wavelength" srcBlockID="1843815922" srcVarID="wavelength"/>
 <link dstBlockID="176198536" dstVarID="input" srcBlockID="303685821" srcVarID="output"/>
-<link dstBlockID="1595038977" dstVarID="refractive index" srcBlockID="303685821" srcVarID="refractive index"/>
-<link dstBlockID="2138988769" dstVarID="object" srcBlockID="176198536" srcVarID="output"/>
 <link dstBlockID="764053583" dstVarID="input" srcBlockID="1595038977" srcVarID="output"/>
 <link dstBlockID="1616066861" dstVarID="object" srcBlockID="764053583" srcVarID="output"/>
+<link dstBlockID="2138988769" dstVarID="object" srcBlockID="176198536" srcVarID="output"/>
 <link dstBlockID="1269880937" dstVarID="object" srcBlockID="505188305" srcVarID="output"/>
+<link dstBlockID="303685821" dstVarID="refractive index" srcBlockID="1595038977" srcVarID="refractive index"/>
 </links>
 </protocol>

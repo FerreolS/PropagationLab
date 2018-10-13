@@ -11,7 +11,7 @@
 </output>
 </variables>
 </block>
-<block ID="1693516850" blockType="plugins.ferreol.PropagationLab.Propagate" className="PropagationLab" collapsed="false" definedName="Propagate" height="205" keepsResults="true" width="291" xLocation="22" yLocation="86">
+<block ID="1693516850" blockType="plugins.ferreol.PropagationLab.Propagate" className="PropagationLab" collapsed="false" definedName="Propagation in medium 1" height="205" keepsResults="true" width="282" xLocation="22" yLocation="86">
 <variables>
 <input>
 <variable ID="input" name="input" runtime="false" visible="true"/>
@@ -26,14 +26,25 @@
 </output>
 </variables>
 </block>
-<block ID="1196339945" blockType="plugins.ferreol.PropagationLab.Propagate" className="PropagationLab" collapsed="false" definedName="Propagate" height="205" keepsResults="true" width="291" xLocation="430" yLocation="25">
+<block ID="1293728756" blockType="plugins.ylemontag.mathoperations.MathOperationExpressionBlock" className="plugins.ylemontag.mathoperations.MathOperationPlugin" collapsed="true" definedName="minus " height="108" keepsResults="true" width="208" xLocation="284" yLocation="34">
+<variables>
+<input>
+<variable ID="Operation" name="" runtime="false" value="-x" visible="true"/>
+<variable ID="dyn-x" name="x" runtime="true" type="double" visible="true"/>
+</input>
+<output>
+<variable ID="Out" name="result" runtime="false" type="java.lang.Double" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1196339945" blockType="plugins.ferreol.PropagationLab.Propagate" className="PropagationLab" collapsed="false" definedName="back propagation in medium 2" height="205" keepsResults="true" width="295" xLocation="440" yLocation="41">
 <variables>
 <input>
 <variable ID="input" name="input" runtime="false" visible="true"/>
 <variable ID="pixel size" name="dxy(nm):" runtime="false" visible="true"/>
 <variable ID="wavelength" name="λ(nm):" runtime="false" visible="true"/>
 <variable ID="refractive index" name="refractive index:" runtime="false" value="1.3599999999999999" visible="true"/>
-<variable ID="depth" name="depth (mm):" runtime="false" value="-0.01" visible="true"/>
+<variable ID="depth" name="depth (mm):" runtime="false" visible="true"/>
 <variable ID="outputOption" name="Output:" runtime="false" value="Cartesian" visible="true"/>
 </input>
 <output>
@@ -41,7 +52,7 @@
 </output>
 </variables>
 </block>
-<block ID="943096834" blockType="plugins.ferreol.PropagationLab.Propagate" className="PropagationLab" collapsed="false" definedName="Propagate" height="205" keepsResults="true" width="291" xLocation="436" yLocation="257">
+<block ID="943096834" blockType="plugins.ferreol.PropagationLab.Propagate" className="PropagationLab" collapsed="false" definedName="back propagation in medium 1" height="205" keepsResults="true" width="295" xLocation="436" yLocation="257">
 <variables>
 <input>
 <variable ID="input" name="input" runtime="false" visible="true"/>
@@ -203,5 +214,7 @@
 <link dstBlockID="1897485298" dstVarID="dyn-x" srcBlockID="1631786355" srcVarID="output"/>
 <link dstBlockID="971201731" dstVarID="object" srcBlockID="1897485298" srcVarID="dyn-x" srcVarType="icy.sequence.Sequence"/>
 <link dstBlockID="1824332210" dstVarID="object" srcBlockID="81805097" srcVarID="Out" srcVarType="icy.sequence.Sequence"/>
+<link dstBlockID="1293728756" dstVarID="dyn-x" srcBlockID="1693516850" srcVarID="depth"/>
+<link dstBlockID="1196339945" dstVarID="depth" srcBlockID="1293728756" srcVarID="Out" srcVarType="java.lang.Double"/>
 </links>
 </protocol>
