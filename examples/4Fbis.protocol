@@ -1,0 +1,151 @@
+<protocol VERSION="4">
+<blocks>
+<block ID="425689382" blockType="plugins.ferreol.PropagationLab.PupilFunction" className="PropagationLab" collapsed="false" definedName="Pupil function" height="235" keepsResults="true" width="208" xLocation="383" yLocation="64">
+<variables>
+<input>
+<variable ID="npix" name="num pixel" runtime="false" value="64" visible="true"/>
+<variable ID="pixel size" name="dxy(nm):" runtime="false" value="64.5" visible="true"/>
+<variable ID="wavelength" name="λ(nm):" runtime="false" value="540.0" visible="true"/>
+<variable ID="refractive index" name="refractive index:" runtime="false" value="1.3" visible="true"/>
+<variable ID="na" name="na:" runtime="false" value="1.0" visible="true"/>
+<variable ID="fftshiftout" name="FFT shift" runtime="false" value="false" visible="true"/>
+<variable ID="outputOption" name="Output type:" runtime="false" value="Cartesian" visible="true"/>
+</input>
+<output>
+<variable ID="pupil" name="pupil function" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="592462792" blockType="plugins.adufour.blocks.tools.io.FileToSequence" className="plugins.adufour.blocks.tools.io.FileToSequence" collapsed="false" definedName="Wave at the focal plane" height="108" keepsResults="true" width="247" xLocation="0" yLocation="3">
+<variables>
+<input>
+<variable ID="input file" name="input file" runtime="false" value="/Users/ferreol/workspace/PropagationLab/examples/SmallPoint.tif" visible="true"/>
+<variable ID="Series" name="Series" runtime="false" value="0" visible="true"/>
+</input>
+<output>
+<variable ID="sequence" name="sequence" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="2026525174" blockType="plugins.ferreol.PropagationLab.fftShift" className="PropagationLab" collapsed="true" definedName="fft shift" height="83" keepsResults="true" width="203" xLocation="32" yLocation="123">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Output" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="515497337" blockType="plugins.ferreol.PropagationLab.FourierTransform" className="PropagationLab" collapsed="true" definedName="Fourier transform" height="155" keepsResults="true" width="267" xLocation="398" yLocation="0">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+<variable ID="direction" name="Backward" runtime="false" value="false" visible="true"/>
+<variable ID="fftshiftout" name="FFT shift" runtime="false" value="false" visible="true"/>
+<variable ID="outputOption" name="Output:" runtime="false" value="Cartesian" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Output" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1126672743" blockType="plugins.ferreol.PropagationLab.ComplexMultiplication" className="PropagationLab" collapsed="true" definedName="Complex multiplication" height="149" keepsResults="true" width="286" xLocation="710" yLocation="40">
+<variables>
+<input>
+<variable ID="input 1" name="input 1 (Cartesian)" runtime="false" visible="true"/>
+<variable ID="input 2" name="input 2" runtime="false" visible="true"/>
+<variable ID="input2 type" name="input 2 type:" runtime="false" visible="true"/>
+<variable ID="outputOption" name="Output type:" runtime="false" value="Cartesian" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Output" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="151270201" blockType="plugins.ferreol.PropagationLab.ComplexConvert" className="PropagationLab" collapsed="true" definedName="Complex convert" height="127" keepsResults="true" width="287" xLocation="456" yLocation="323">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+<variable ID="input type" name="input  type:" runtime="false" value="Cartesian" visible="true"/>
+<variable ID="output type" name="Output type:" runtime="false" value="Log(modulus)" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Output" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1849732474" blockType="plugins.ferreol.PropagationLab.FourierTransform" className="PropagationLab" collapsed="false" definedName="Fourier transform" height="155" keepsResults="true" width="267" xLocation="979" yLocation="31">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+<variable ID="direction" name="Backward" runtime="false" value="true" visible="true"/>
+<variable ID="fftshiftout" name="FFT shift" runtime="false" value="false" visible="true"/>
+<variable ID="outputOption" name="Output:" runtime="false" value="modulus" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Output" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1007435924" blockType="plugins.ylemontag.mathoperations.MathOperationExpressionBlock" className="plugins.ylemontag.mathoperations.MathOperationPlugin" collapsed="true" definedName="square" height="288" keepsResults="true" width="329" xLocation="1038" yLocation="293">
+<variables>
+<input>
+<variable ID="Operation" name="" runtime="false" value="x*x" visible="true"/>
+<variable ID="dyn-x" name="x" runtime="true" type="icy.sequence.Sequence" visible="true"/>
+</input>
+<output>
+<variable ID="Out" name="result" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="576263546" blockType="plugins.ferreol.PropagationLab.fftShift" className="PropagationLab" collapsed="true" definedName="fft shift" height="83" keepsResults="true" width="241" xLocation="447" yLocation="385">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Output" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="1198874007" blockType="plugins.adufour.blocks.tools.Display" className="plugins.adufour.blocks.tools.Display" collapsed="false" definedName="Output" height="327" keepsResults="true" width="347" xLocation="807" yLocation="434">
+<variables>
+<input>
+<variable ID="object" name="object" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block ID="1241949945" blockType="plugins.adufour.blocks.tools.Display" className="plugins.adufour.blocks.tools.Display" collapsed="false" definedName="Input" height="331" keepsResults="true" width="365" xLocation="9" yLocation="432">
+<variables>
+<input>
+<variable ID="object" name="object" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+<block ID="992215068" blockType="plugins.adufour.blocks.tools.Display" className="plugins.adufour.blocks.tools.Display" collapsed="false" definedName="Pupil" height="241" keepsResults="true" width="316" xLocation="402" yLocation="436">
+<variables>
+<input>
+<variable ID="object" name="object" runtime="false" type="icy.sequence.Sequence" visible="true"/>
+</input>
+<output/>
+</variables>
+</block>
+</blocks>
+<links>
+<link dstBlockID="1126672743" dstVarID="input 2" srcBlockID="425689382" srcVarID="pupil"/>
+<link dstBlockID="1126672743" dstVarID="input2 type" srcBlockID="425689382" srcVarID="outputOption"/>
+<link dstBlockID="1241949945" dstVarID="object" srcBlockID="2026525174" srcVarID="output"/>
+<link dstBlockID="515497337" dstVarID="input" srcBlockID="2026525174" srcVarID="output"/>
+<link dstBlockID="1126672743" dstVarID="input 1" srcBlockID="515497337" srcVarID="output"/>
+<link dstBlockID="1849732474" dstVarID="input" srcBlockID="1126672743" srcVarID="output"/>
+<link dstBlockID="576263546" dstVarID="input" srcBlockID="151270201" srcVarID="output"/>
+<link dstBlockID="1007435924" dstVarID="dyn-x" srcBlockID="1849732474" srcVarID="output"/>
+<link dstBlockID="1198874007" dstVarID="object" srcBlockID="1007435924" srcVarID="Out" srcVarType="icy.sequence.Sequence"/>
+<link dstBlockID="992215068" dstVarID="object" srcBlockID="576263546" srcVarID="output"/>
+<link dstBlockID="151270201" dstVarID="input" srcBlockID="425689382" srcVarID="pupil"/>
+<link dstBlockID="2026525174" dstVarID="input" srcBlockID="592462792" srcVarID="sequence"/>
+</links>
+</protocol>
