@@ -25,11 +25,21 @@
 <block ID="592462792" blockType="plugins.adufour.blocks.tools.io.FileToSequence" className="plugins.adufour.blocks.tools.io.FileToSequence" collapsed="false" definedName="Wave at the focal plane" height="108" keepsResults="true" width="247" xLocation="0" yLocation="3">
 <variables>
 <input>
-<variable ID="input file" name="input file" runtime="false" value="/Users/ferreol/workspace/PropagationLab/examples/USAF_Inner2.tif" visible="true"/>
+<variable ID="input file" name="input file" runtime="false" value="/Users/ferreol/Desktop/Mifobio/MA-formationImages/Point.tif" visible="true"/>
 <variable ID="Series" name="Series" runtime="false" value="0" visible="true"/>
 </input>
 <output>
 <variable ID="sequence" name="sequence" runtime="false" visible="true"/>
+</output>
+</variables>
+</block>
+<block ID="2026525174" blockType="plugins.ferreol.PropagationLab.fftShift" className="PropagationLab" collapsed="false" definedName="fft shift" height="83" keepsResults="true" width="203" xLocation="31" yLocation="176">
+<variables>
+<input>
+<variable ID="input" name="input" runtime="false" visible="true"/>
+</input>
+<output>
+<variable ID="output" name="Output" runtime="false" visible="true"/>
 </output>
 </variables>
 </block>
@@ -163,8 +173,6 @@
 <links>
 <link dstBlockID="1126672743" dstVarID="input 2" srcBlockID="425689382" srcVarID="pupil"/>
 <link dstBlockID="1126672743" dstVarID="input2 type" srcBlockID="425689382" srcVarID="outputOption"/>
-<link dstBlockID="515497337" dstVarID="input" srcBlockID="592462792" srcVarID="sequence"/>
-<link dstBlockID="1241949945" dstVarID="object" srcBlockID="592462792" srcVarID="sequence"/>
 <link dstBlockID="1833607571" dstVarID="input" srcBlockID="515497337" srcVarID="output"/>
 <link dstBlockID="1126672743" dstVarID="input 1" srcBlockID="515497337" srcVarID="output"/>
 <link dstBlockID="1849732474" dstVarID="input" srcBlockID="1126672743" srcVarID="output"/>
@@ -175,5 +183,8 @@
 <link dstBlockID="1198874007" dstVarID="object" srcBlockID="1007435924" srcVarID="Out" srcVarType="icy.sequence.Sequence"/>
 <link dstBlockID="992215068" dstVarID="object" srcBlockID="576263546" srcVarID="output"/>
 <link dstBlockID="1038432977" dstVarID="object" srcBlockID="1981466885" srcVarID="output"/>
+<link dstBlockID="2026525174" dstVarID="input" srcBlockID="592462792" srcVarID="sequence"/>
+<link dstBlockID="1241949945" dstVarID="object" srcBlockID="2026525174" srcVarID="output"/>
+<link dstBlockID="515497337" dstVarID="input" srcBlockID="2026525174" srcVarID="output"/>
 </links>
 </protocol>

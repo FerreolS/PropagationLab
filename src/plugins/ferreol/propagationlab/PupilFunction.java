@@ -214,12 +214,12 @@ public class PupilFunction extends EzPlug implements Block, EzStoppable, PluginB
         inputMap.add("wavelength", lambda.getVariable());
         inputMap.add("refractive index", ni.getVariable());
         inputMap.add("na", na.getVariable());
-        inputMap.add("defocus",defocus.getVariable());
+        /*      inputMap.add("defocus",defocus.getVariable());
         inputMap.add("astigmatism 0°",astigmatism0.getVariable());
         inputMap.add("astigmatism 45°",astigmatism45.getVariable());
         inputMap.add("coma X", comaX.getVariable());
         inputMap.add("coma Y", comaY.getVariable());
-        inputMap.add("spharical",spherical.getVariable());
+        inputMap.add("spherical",spherical.getVariable());*/
         inputMap.add("fftshiftout", fftshift.getVariable());
         inputMap.add("outputOption", outputOption.getVariable());
     }
